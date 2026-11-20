@@ -18,7 +18,7 @@ class ContentRepository
 
     /**
      * @param  string  $basePath  absolute path of the content/ folder
-     * @param  array<string, array{name?: string, tagline?: string, file?: string}>  $languageConfig  enabled languages, in display order
+     * @param  array<string, array{name: string, tagline: string, file: string}>  $languageConfig  enabled languages, in display order
      */
     public function __construct(
         private readonly string $basePath,
@@ -49,9 +49,9 @@ class ContentRepository
 
             $languages[$key] = new Language(
                 key: $key,
-                name: $meta['name'] ?? ucfirst($key),
-                tagline: $meta['tagline'] ?? '',
-                fileName: $meta['file'] ?? $key,
+                name: $meta['name'],
+                tagline: $meta['tagline'],
+                fileName: $meta['file'],
                 levels: $levels,
             );
         }
@@ -104,7 +104,7 @@ class ContentRepository
 
         $minScore = $data['unlock']['min_score'] ?? null;
 
-        if ($minScore !== null && ! is_int($minScore)) {
+        if (! is_int($minScore)) {
             throw ContentException::invalidField($this->relative($file), 'unlock.min_score', 'a whole number');
         }
 
@@ -112,7 +112,7 @@ class ContentRepository
             id: $this->text($data, 'id', $file),
             title: $this->text($data, 'title', $file),
             order: $this->integer($data, 'order', $file),
-            description: $this->optionalText($data, 'description', $file) ?? '',
+            description: $this->text($data, 'description', $file),
             minScore: $minScore,
             lessons: $lessons,
             questions: $questions,
@@ -214,8 +214,6 @@ class ContentRepository
     /**
      * Answers and options must be quoted in YAML so they stay text (content/README.md),
      * so only real strings are accepted here.
-     *
-     * @param  array<string, mixed>  $data
      */
     private function text(array $data, string $key, string $file, ?string $id = null): string
     {
@@ -228,17 +226,11 @@ class ContentRepository
         return $value;
     }
 
-    /**
-     * @param  array<string, mixed>  $data
-     */
     private function optionalText(array $data, string $key, string $file, ?string $id = null): ?string
     {
         return ($data[$key] ?? null) === null ? null : $this->text($data, $key, $file, $id);
     }
 
-    /**
-     * @param  array<string, mixed>  $data
-     */
     private function integer(array $data, string $key, string $file, ?string $id = null): int
     {
         $value = $data[$key] ?? null;
@@ -251,7 +243,6 @@ class ContentRepository
     }
 
     /**
-     * @param  array<string, mixed>  $data
      * @return list<string>
      */
     private function textList(array $data, string $key, string $file, ?string $id = null): array
@@ -273,11 +264,6 @@ class ContentRepository
 
     private function relative(string $file): string
     {
-        $normalizedBase = rtrim(str_replace('\\', '/', $this->basePath), '/');
-        $normalizedFile = str_replace('\\', '/', $file);
-
-        return str_starts_with($normalizedFile, $normalizedBase.'/')
-            ? 'content/'.substr($normalizedFile, strlen($normalizedBase) + 1)
-            : $normalizedFile;
+        return 'content/'.ltrim(str_replace('\\', '/', substr($file, strlen($this->basePath))), '/');
     }
 }

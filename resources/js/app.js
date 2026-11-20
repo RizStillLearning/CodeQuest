@@ -3,8 +3,6 @@ import * as bootstrap from 'bootstrap';
 import { focusFirstInvalidField, initPasswordReveal, initSubmitOnce } from './forms';
 import { initTryQuestion } from './home/try-question';
 
-window.bootstrap = bootstrap;
-
 initPasswordReveal();
 initSubmitOnce();
 focusFirstInvalidField();

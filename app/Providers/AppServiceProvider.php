@@ -15,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->scoped(ContentRepository::class, fn () => new ContentRepository(
             base_path('content'),
-            config('codequest.languages', []),
+            config('codequest.languages'),
         ));
     }
 

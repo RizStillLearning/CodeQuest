@@ -2,14 +2,12 @@
 
 namespace App\ViewModels;
 
+use App\Content\Language;
 use App\Content\Level;
-use App\Content\Track;
 
 /**
- * A level drawn as a winding path: one node per lesson, then the practice
- * questions, then the next level. Locked steps are greyed out.
- *
- * Controllers build it and pass it to resources/views/partials/learning-path.blade.php.
+ * A language's level drawn as a winding path: one node per lesson, then the
+ * practice questions, then the next level. Locked steps are greyed out.
  */
 final class LearningPath
 {
@@ -18,9 +16,6 @@ final class LearningPath
      */
     public const SHIFT_PERCENT = 18;
 
-    /**
-     * Nodes snake right and back: 0, 1, 2, 1, 0, 1, ...
-     */
     private const SHIFT_PATTERN = [0, 1, 2, 1];
 
     /**
@@ -34,34 +29,21 @@ final class LearningPath
      */
     public string $line;
 
-    public function __construct(public Level $level, public ?Level $nextLevel = null)
+    public function __construct(public Language $language, public Level $level, public ?Level $nextLevel = null)
     {
         $this->steps = $this->buildSteps();
         $this->line = $this->buildLine();
     }
 
-    /**
-     * One path per track, keyed by language key, for partials/language-tracks.
-     *
-     * @param  list<Track>  $tracks
-     * @return array<string, self>
-     */
-    public static function forTracks(array $tracks): array
+    public static function forLanguage(Language $language): self
     {
-        $paths = [];
+        $level = $language->firstLevel();
 
-        foreach ($tracks as $track) {
-            $paths[$track->language->key] = new self($track->level, $track->nextLevel);
-        }
-
-        return $paths;
+        return new self($language, $level, $language->levelAfter($level));
     }
 
     /**
-     * Visitor preview: the first lesson is open and everything after it is locked.
-     * Once progress tracking exists, open/locked comes from the learner's progress.
-     *
-     * @return list<array{kind: string, title: string, meta: string, open: bool, shift: int}>
+     * The first lesson is open; everything after it is locked.
      */
     private function buildSteps(): array
     {

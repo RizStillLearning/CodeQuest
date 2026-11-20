@@ -236,17 +236,6 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
     height: 1.65rem;
 }
 
-.cq-logo-xl {
-    flex-direction: column;
-    gap: 1rem;
-    font-size: 2.25rem;
-}
-
-.cq-logo-xl .cq-logo-mark {
-    width: 6rem;
-    height: 6rem;
-}
-
 .cq-navbar {
     --bs-navbar-padding-y: .8rem;
     --bs-navbar-nav-link-padding-x: .9rem;
@@ -390,11 +379,6 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
 .cq-chip-xp {
     background: var(--cq-xp-soft);
     color: var(--cq-xp-ink);
-}
-
-.cq-chip-success {
-    background: var(--cq-success-soft);
-    color: var(--cq-success);
 }
 
 .cq-chip-xp.is-earned {
@@ -625,24 +609,6 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
 .cq-checks .bi {
     margin-right: .25rem;
     color: var(--cq-success);
-}
-
-.cq-hero-art {
-    display: grid;
-    place-items: center;
-    gap: 1.5rem;
-    padding: 3rem 1.5rem;
-    border: 1px solid var(--cq-border);
-    border-radius: var(--cq-radius-lg);
-    background: var(--cq-surface);
-    box-shadow: var(--cq-shadow-lg);
-}
-
-.cq-hero-art-chips {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: .5rem;
 }
 
 /* ==========================================================================
@@ -1371,7 +1337,7 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
     }
 }
 
-/* Centered message block: the post-login page and error pages. */
+/* Centered message block: "segera hadir" pages and error pages. */
 .cq-message {
     max-width: 34rem;
     margin: 0 auto;
@@ -1438,14 +1404,6 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
     font-size: .9rem;
     font-weight: 800;
     line-height: 1;
-}
-
-.cq-avatar-lg {
-    width: 4.5rem;
-    height: 4.5rem;
-    margin: 0 auto 1.25rem;
-    box-shadow: 0 0 0 6px var(--cq-primary-soft);
-    font-size: 1.75rem;
 }
 
 .cq-user-btn {

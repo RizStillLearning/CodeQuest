@@ -9,8 +9,6 @@ use App\Http\Controllers\LearnController;
 use App\Http\Controllers\ProgressController;
 use Illuminate\Support\Facades\Route;
 
-// Every route points to a controller; controllers prepare the data and views only render it.
-
 Route::middleware('guest')->group(function () {
     // Signed-in users are sent to /belajar instead (see bootstrap/app.php).
     Route::get('/', HomeController::class)->name('home');

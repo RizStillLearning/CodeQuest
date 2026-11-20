@@ -7,17 +7,10 @@
  */
 
 // Same rule as content/README.md: compare after trimming the start and end.
-const normalize = (value) => String(value).replace(/\r\n?/g, '\n').trim();
+const normalize = (value) => value.replace(/\r\n?/g, '\n').trim();
 
 export function initTryQuestion(root) {
-    let answers;
-
-    try {
-        answers = JSON.parse(root.dataset.answers ?? '[]').map(normalize);
-    } catch {
-        return;
-    }
-
+    const answers = JSON.parse(root.dataset.answers).map(normalize);
     const form = root.querySelector('[data-try-form]');
     const input = root.querySelector('[data-answer-input]');
     const options = root.querySelectorAll('[data-option]');
@@ -30,8 +23,7 @@ export function initTryQuestion(root) {
     const isCorrect = (value) => answers.includes(normalize(value));
 
     const showFeedback = (correct) => {
-        if (hint) hint.hidden = true;
-
+        hint.hidden = true;
         feedback.classList.toggle('is-correct', correct);
         feedback.classList.toggle('is-wrong', !correct);
         feedbackTitle.textContent = correct ? root.dataset.textCorrect : root.dataset.textWrong;
@@ -43,36 +35,38 @@ export function initTryQuestion(root) {
             next.hidden = false;
         });
 
-        if (correct && xpChip) {
+        if (correct) {
             xpChip.classList.remove('is-earned');
             void xpChip.offsetWidth; // restart the animation
             xpChip.classList.add('is-earned');
         }
     };
 
-    form?.addEventListener('submit', (event) => {
-        event.preventDefault();
+    // Typed answers (predict the output, fill in the code).
+    if (input) {
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
 
-        if (!input) return;
+            if (normalize(input.value) === '') {
+                hint.textContent = root.dataset.textEmpty;
+                hint.hidden = false;
+                input.focus();
+                return;
+            }
 
-        if (normalize(input.value) === '') {
-            hint.textContent = root.dataset.textEmpty;
-            hint.hidden = false;
-            input.focus();
-            return;
-        }
+            const correct = isCorrect(input.value);
+            input.classList.toggle('is-valid', correct);
+            input.classList.toggle('is-invalid', !correct);
+            showFeedback(correct);
+        });
 
-        const correct = isCorrect(input.value);
-        input.classList.toggle('is-valid', correct);
-        input.classList.toggle('is-invalid', !correct);
-        showFeedback(correct);
-    });
+        input.addEventListener('input', () => {
+            input.classList.remove('is-valid', 'is-invalid');
+            hint.hidden = true;
+        });
+    }
 
-    input?.addEventListener('input', () => {
-        input.classList.remove('is-valid', 'is-invalid');
-        if (hint) hint.hidden = true;
-    });
-
+    // Option buttons (multiple choice, case study).
     options.forEach((button) => {
         button.addEventListener('click', () => {
             const correct = isCorrect(button.dataset.option);

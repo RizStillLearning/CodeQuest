@@ -38,6 +38,6 @@ final readonly class Language
      */
     public function extension(): string
     {
-        return pathinfo($this->fileName, PATHINFO_EXTENSION) ?: $this->key;
+        return pathinfo($this->fileName, PATHINFO_EXTENSION);
     }
 }

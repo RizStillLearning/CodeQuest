@@ -4,8 +4,8 @@ namespace Tests\Feature;
 
 use App\Content\ContentException;
 use App\Content\ContentRepository;
-use App\Content\Track;
 use App\Models\User;
+use App\ViewModels\LearningPath;
 use Tests\TestCase;
 
 class HomePageTest extends TestCase
@@ -23,7 +23,7 @@ class HomePageTest extends TestCase
 
         $response->assertOk();
         $response->assertSee('Belajar coding lewat');
-        $response->assertSeeInOrder(['Python', 'Java', 'C']);
+        $response->assertSeeInOrder(['id="cq-tab-python"', 'id="cq-tab-java"', 'id="cq-tab-c"'], false);
         $response->assertSee('Level 1: Dasar Pemrograman');
         $response->assertSee('Pengenalan Pemrograman');
         $response->assertSee('10 soal latihan');
@@ -86,7 +86,7 @@ class HomePageTest extends TestCase
     {
         $this->get('/')
             ->assertViewIs('home')
-            ->assertViewHas('tracks', fn (array $tracks) => array_map(fn (Track $track) => $track->language->key, $tracks) === ['python', 'java', 'c'])
+            ->assertViewHas('paths', fn (array $paths) => array_map(fn (LearningPath $path) => $path->language->key, $paths) === ['python', 'java', 'c'])
             ->assertViewHas('reasons', fn (array $reasons) => count($reasons) === 3)
             ->assertViewHas('steps', fn (array $steps) => count($steps) === 5)
             ->assertViewHas('questionTypes', fn (array $types) => count($types) === 4);

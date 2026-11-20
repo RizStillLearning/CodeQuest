@@ -35,8 +35,6 @@
                 <div class="col-lg-6">
                     @if ($demoQuestion)
                         @include('partials.home.try-question', ['question' => $demoQuestion, 'language' => $demoLanguage])
-                    @else
-                        @include('partials.home.hero-art')
                     @endif
                 </div>
             </div>
@@ -105,7 +103,7 @@
                 <p>Setiap bahasa punya jalur belajarnya sendiri. Level 1 dimulai dari nol, jadi kamu tidak perlu pengalaman coding sebelumnya.</p>
             </div>
 
-            @include('partials.language-tracks', ['tracks' => $tracks, 'paths' => $paths, 'startUrl' => route('register')])
+            @include('partials.language-tracks', ['paths' => $paths, 'startUrl' => route('register')])
         </div>
     </section>
 

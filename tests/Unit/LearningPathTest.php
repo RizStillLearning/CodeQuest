@@ -7,7 +7,6 @@ use App\Content\Lesson;
 use App\Content\Level;
 use App\Content\Question;
 use App\Content\QuestionType;
-use App\Content\Track;
 use App\ViewModels\LearningPath;
 use PHPUnit\Framework\TestCase;
 
@@ -15,7 +14,7 @@ class LearningPathTest extends TestCase
 {
     public function test_steps_are_lessons_then_practice_then_next_level(): void
     {
-        $path = new LearningPath($this->level(), $this->level(order: 2, title: 'Percabangan'));
+        $path = new LearningPath($this->language(), $this->level(), $this->level(order: 2, title: 'Percabangan'));
 
         $this->assertSame(
             ['Pengenalan', 'Variabel', '2 soal latihan', 'Percabangan'],
@@ -28,30 +27,41 @@ class LearningPathTest extends TestCase
 
     public function test_missing_next_level_shows_coming_soon(): void
     {
-        $path = new LearningPath($this->level());
+        $path = new LearningPath($this->language(), $this->level());
 
         $this->assertSame('Segera hadir', end($path->steps)['title']);
         $this->assertSame('Level 2', end($path->steps)['kind']);
     }
 
-    public function test_for_tracks_builds_one_path_per_language(): void
+    public function test_for_language_starts_at_the_first_level_and_points_to_the_next(): void
     {
-        $language = new Language('python', 'Python', '', 'main.py', [$this->level()]);
-        $paths = LearningPath::forTracks([Track::fromLanguage($language)]);
+        $first = $this->level();
+        $second = $this->level(order: 2, title: 'Percabangan');
 
-        $this->assertSame(['python'], array_keys($paths));
-        $this->assertSame('Pengenalan', $paths['python']->steps[0]['title']);
+        $path = LearningPath::forLanguage($this->language([$first, $second]));
+
+        $this->assertSame($first, $path->level);
+        $this->assertSame($second, $path->nextLevel);
+        $this->assertSame('Percabangan', end($path->steps)['title']);
     }
 
     public function test_line_passes_through_every_node_center(): void
     {
-        $path = new LearningPath($this->level());
+        $path = new LearningPath($this->language(), $this->level());
 
         // Nodes at x = 0, 18, 36, 18 (% of width) and y = 50, 150, 250, 350.
         $this->assertSame(
             'M 0 50 C 0 100, 18 100, 18 150 C 18 200, 36 200, 36 250 C 36 300, 18 300, 18 350',
             $path->line,
         );
+    }
+
+    /**
+     * @param  list<Level>|null  $levels
+     */
+    private function language(?array $levels = null): Language
+    {
+        return new Language('python', 'Python', 'Mudah dibaca.', 'main.py', $levels ?? [$this->level()]);
     }
 
     private function level(int $order = 1, string $title = 'Dasar Pemrograman'): Level

@@ -4,8 +4,8 @@ namespace Tests\Feature;
 
 use App\Content\ContentException;
 use App\Content\ContentRepository;
-use App\Content\Track;
 use App\Models\User;
+use App\ViewModels\LearningPath;
 use Tests\TestCase;
 
 class LearnPageTest extends TestCase
@@ -28,10 +28,10 @@ class LearnPageTest extends TestCase
 
         $response->assertOk()
             ->assertViewIs('learn')
-            ->assertViewHas('tracks', fn (array $tracks) => array_map(fn (Track $track) => $track->language->key, $tracks) === ['python', 'java', 'c'])
+            ->assertViewHas('paths', fn (array $paths) => array_map(fn (LearningPath $path) => $path->language->key, $paths) === ['python', 'java', 'c'])
             ->assertSee('Halo, Siti!')
             ->assertSee('Pilih bahasamu, ikuti jalurnya')
-            ->assertSeeInOrder(['Python', 'Java', 'C'])
+            ->assertSeeInOrder(['id="cq-tab-python"', 'id="cq-tab-java"', 'id="cq-tab-c"'], false)
             ->assertSee('Level 1: Dasar Pemrograman')
             ->assertSee('Pengenalan Pemrograman')
             // Landing-page sections are not repeated here.

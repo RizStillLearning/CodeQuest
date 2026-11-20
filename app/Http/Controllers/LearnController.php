@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Content\ContentException;
 use App\Content\ContentRepository;
-use App\Content\Track;
 use App\ViewModels\LearningPath;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -24,12 +23,9 @@ class LearnController extends Controller
             $languages = [];
         }
 
-        $tracks = array_map(Track::fromLanguage(...), array_values($languages));
-
         return view('learn', [
             'user' => $request->user(),
-            'tracks' => $tracks,
-            'paths' => LearningPath::forTracks($tracks),
+            'paths' => array_map(LearningPath::forLanguage(...), array_values($languages)),
         ]);
     }
 }

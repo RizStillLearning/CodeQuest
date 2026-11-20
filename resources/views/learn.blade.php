@@ -12,8 +12,7 @@
                 <p>Setiap bahasa punya jalur belajarnya sendiri. Level 1 dimulai dari nol, jadi kamu tidak perlu pengalaman coding sebelumnya.</p>
             </div>
 
-            {{-- No start link yet: lesson pages are MVP step 3. --}}
-            @include('partials.language-tracks', ['tracks' => $tracks, 'paths' => $paths, 'startUrl' => null])
+            @include('partials.language-tracks', ['paths' => $paths, 'startUrl' => null])
         </div>
     </section>
 @endsection

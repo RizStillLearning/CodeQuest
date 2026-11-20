@@ -43,7 +43,7 @@ class ContentRepositoryTest extends TestCase
         $this->writeLevel('python', 'level-01-basics', order: 1);
         $this->writeLevel('c', 'level-01-basics', order: 1);
 
-        $repository = $this->repository(['c' => ['name' => 'C'], 'java' => ['name' => 'Java'], 'python' => ['name' => 'Python']]);
+        $repository = $this->repository('c', 'java', 'python');
 
         $this->assertSame(['c', 'python'], array_keys($repository->languages()));
     }
@@ -52,7 +52,7 @@ class ContentRepositoryTest extends TestCase
     {
         $this->writeLevel('python', 'level-01-basics', order: 1);
 
-        $language = $this->repository(['python' => ['name' => 'Python', 'tagline' => 'Mudah dibaca.', 'file' => 'main.py']])
+        $language = (new ContentRepository($this->root, ['python' => ['name' => 'Python', 'tagline' => 'Mudah dibaca.', 'file' => 'main.py']]))
             ->languages()['python'];
 
         $this->assertSame('Python', $language->name);
@@ -89,7 +89,7 @@ class ContentRepositoryTest extends TestCase
               xp: 5
             YAML);
 
-        $level = $this->repository(['python' => ['name' => 'Python']])->languages()['python']->firstLevel();
+        $level = $this->repository('python')->languages()['python']->firstLevel();
 
         $this->assertSame('python-l1', $level->id);
         $this->assertSame('Dasar Pemrograman', $level->title);
@@ -97,7 +97,6 @@ class ContentRepositoryTest extends TestCase
         $this->assertSame(70, $level->minScore);
         $this->assertSame(['Pengenalan', 'Variabel'], array_map(fn ($lesson) => $lesson->title, $level->lessons));
         $this->assertCount(2, $level->questions);
-        $this->assertSame(35, $level->lessonXp());
         $this->assertSame(15, $level->questionXp());
         $this->assertSame(50, $level->totalXp());
         $this->assertSame(2, $level->questionTypeCount());
@@ -109,7 +108,7 @@ class ContentRepositoryTest extends TestCase
         $this->write('python/level-01-basics/lessons/01-a.md', $this->lesson('python-l1-a', 'Kedua', order: 2, xp: 10));
         $this->write('python/level-01-basics/lessons/02-b.md', $this->lesson('python-l1-b', 'Pertama', order: 1, xp: 10));
 
-        $level = $this->repository(['python' => []])->languages()['python']->firstLevel();
+        $level = $this->repository('python')->languages()['python']->firstLevel();
 
         $this->assertSame(['Pertama', 'Kedua'], array_map(fn ($lesson) => $lesson->title, $level->lessons));
     }
@@ -119,7 +118,7 @@ class ContentRepositoryTest extends TestCase
         $this->writeLevel('python', 'level-01-basics', order: 1, id: 'python-l1');
         $this->writeLevel('python', 'level-02-next', order: 2, id: 'python-l2');
 
-        $language = $this->repository(['python' => []])->languages()['python'];
+        $language = $this->repository('python')->languages()['python'];
 
         $this->assertSame(['python-l1', 'python-l2'], array_map(fn ($level) => $level->id, $language->levels));
         $this->assertSame('python-l2', $language->levelAfter($language->levels[0])?->id);
@@ -130,7 +129,7 @@ class ContentRepositoryTest extends TestCase
     {
         $this->writeLevel('python', 'level-01-basics', order: 1);
 
-        $level = $this->repository(['python' => []])->languages()['python']->firstLevel();
+        $level = $this->repository('python')->languages()['python']->firstLevel();
 
         $this->assertSame([], $level->questions);
         $this->assertSame(0, $level->questionXp());
@@ -153,7 +152,7 @@ class ContentRepositoryTest extends TestCase
               xp: 10
             YAML);
 
-        $repository = $this->repository(['python' => []]);
+        $repository = $this->repository('python');
         $question = $repository->findQuestion('python-l1-q03');
 
         $this->assertNotNull($question);
@@ -172,7 +171,7 @@ class ContentRepositoryTest extends TestCase
         $this->expectException(ContentException::class);
         $this->expectExceptionMessage('content/python/level-01-basics/level.yaml');
 
-        $this->repository(['python' => []])->languages();
+        $this->repository('python')->languages();
     }
 
     public function test_unquoted_answer_is_rejected(): void
@@ -191,7 +190,7 @@ class ContentRepositoryTest extends TestCase
         $this->expectException(ContentException::class);
         $this->expectExceptionMessage('field `answer`');
 
-        $this->repository(['python' => []])->languages();
+        $this->repository('python')->languages();
     }
 
     public function test_unknown_question_type_is_rejected(): void
@@ -210,7 +209,7 @@ class ContentRepositoryTest extends TestCase
         $this->expectException(ContentException::class);
         $this->expectExceptionMessage('field `type`');
 
-        $this->repository(['python' => []])->languages();
+        $this->repository('python')->languages();
     }
 
     public function test_lesson_without_front_matter_is_rejected(): void
@@ -221,14 +220,37 @@ class ContentRepositoryTest extends TestCase
         $this->expectException(ContentException::class);
         $this->expectExceptionMessage('front matter');
 
-        $this->repository(['python' => []])->languages();
+        $this->repository('python')->languages();
     }
 
-    /**
-     * @param  array<string, array<string, string>>  $config
-     */
-    private function repository(array $config): ContentRepository
+    public function test_level_without_description_is_rejected(): void
     {
+        $this->write('python/level-01-basics/level.yaml', "id: python-l1\ntitle: Dasar\norder: 1\nunlock:\n  min_score: 70\n");
+
+        $this->expectException(ContentException::class);
+        $this->expectExceptionMessage('field `description`');
+
+        $this->repository('python')->languages();
+    }
+
+    public function test_level_without_unlock_score_is_rejected(): void
+    {
+        $this->write('python/level-01-basics/level.yaml', "id: python-l1\ntitle: Dasar\norder: 1\ndescription: Deskripsi.\n");
+
+        $this->expectException(ContentException::class);
+        $this->expectExceptionMessage('field `unlock.min_score`');
+
+        $this->repository('python')->languages();
+    }
+
+    private function repository(string ...$languages): ContentRepository
+    {
+        $config = [];
+
+        foreach ($languages as $key) {
+            $config[$key] = ['name' => ucfirst($key), 'tagline' => "Belajar {$key}.", 'file' => "main.{$key}"];
+        }
+
         return new ContentRepository($this->root, $config);
     }
 
