@@ -80,3 +80,35 @@ Later, only when asked:
 - Every route points to a controller in `app/Http/Controllers` (no closures, no `Route::view`). Controllers prepare all the data a page needs, including the current user; page views only render it, with no `@php` blocks and no `auth()` calls. Display data that needs real logic goes in a class in `app/ViewModels` (e.g. `LearningPath`) that the controller builds. The shared navbar may use `@auth`.
 - Views use classic Blade: pages `@extends` a layout and fill `@section`s; reusable pieces are `@include`d partials with their data passed as an array (`@include('partials.form-input', ['name' => 'email', ...])`). No Blade components (`<x-...>`, `@props`, `$slot`). Each partial lists the variables it expects in a comment at the top. `tests/Unit/ViewConventionsTest.php` checks this.
 - Branch naming and commit format: GitHub Conventional Commit
+
+## Code style: don't write AI-looking code
+
+### Comments
+- Comment the *why*, not the *what*. Don't comment code that explains itself.
+- No numbered step comments ("# Step 1: ...").
+- No comments that describe the edit ("# Fixed: ...", "# Updated to ...").
+- Docstrings only for public or non-obvious functions. Skip Args/Returns boilerplate that just repeats the signature.
+- No emojis in code, comments, logs, or output.
+
+### Error handling
+- No broad `try/except Exception`. Catch specific exceptions only where you can actually handle them; otherwise let it fail.
+- Don't check for conditions that can't happen.
+- No silent fallbacks (`.get(k, {})` chains, "Unknown" defaults) that hide bad data.
+
+### Naming and structure
+- Use short, specific names from the domain, not generic ones like `processed_data`, `final_result`, `handle_data`.
+- Never create `_v2`, `_new`, `_improved`, `_enhanced` versions. Edit the original.
+- Keep the solution in proportion to the problem. No classes, managers, or config objects for small scripts, and no helpers that are only called once.
+- No boilerplate (`if __name__ == "__main__"`, logging setup) unless the file needs it.
+
+### Fit the codebase
+- Read the surrounding code first. Follow its conventions and reuse its existing utilities.
+- Remove unused imports. Only use APIs that exist in the installed version.
+
+### No placeholders
+- No TODO stubs, "in a real implementation..." comments, fake data, or placeholder keys. If something can't be done, say so.
+- Tests must check real behavior. Never weaken or rewrite a test just to make it pass.
+
+### Diffs and commits
+- Keep diffs minimal. Don't reformat or touch unrelated code.
+- Commit messages: one short summary line, with a body only when the change needs explaining. Keep PR descriptions in proportion to the change.
