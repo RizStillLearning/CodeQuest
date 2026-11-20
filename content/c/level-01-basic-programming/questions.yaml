@@ -1,0 +1,140 @@
+- id: c-l1-q01
+  type: multiple_choice
+  prompt: Apa fungsi \n di dalam printf?
+  options:
+    - "Pindah ke baris baru"
+    - "Mengakhiri program"
+    - "Menampilkan huruf n"
+    - "Menambahkan spasi"
+  answer: "Pindah ke baris baru"
+  explanation: >-
+    \n adalah karakter baris baru. printf tidak otomatis pindah baris, jadi tambahkan \n
+    di tempat kamu ingin baris berakhir.
+  xp: 5
+
+- id: c-l1-q02
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    printf("Code");
+    printf("Quest\n");
+    printf("!\n");
+  answer: |-
+    CodeQuest
+    !
+  explanation: >-
+    printf pertama tidak punya \n, jadi "Quest" berlanjut di baris yang sama.
+    \n setelah "Quest" pindah ke baris baru sebelum "!".
+  xp: 10
+
+- id: c-l1-q03
+  type: fill_in
+  prompt: Ini adalah program lengkap. Lengkapi baris pertama agar program bisa memakai printf.
+  code: |
+    #include <____>
+
+    int main(void) {
+        printf("Halo!\n");
+        return 0;
+    }
+  answer: "stdio.h"
+  explanation: >-
+    printf berasal dari library standar input/output, yaitu stdio.h. Tanpa baris ini,
+    compiler tidak tahu apa itu printf.
+  xp: 10
+
+- id: c-l1-q04
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    int xp = 50;
+    xp = xp + 10;
+    xp = xp + 5;
+    printf("%d\n", xp);
+  answer: "65"
+  explanation: >-
+    xp dimulai dari 50, menjadi 60, lalu 65. Setiap baris memakai nilai saat ini untuk menghitung nilai barunya.
+  xp: 10
+
+- id: c-l1-q05
+  type: multiple_choice
+  prompt: Placeholder mana yang menampilkan int dengan printf?
+  options:
+    - "%d"
+    - "%f"
+    - "%c"
+    - "%s"
+  answer: "%d"
+  explanation: >-
+    %d menampilkan int. %f untuk double, %c untuk satu char, dan %s untuk teks.
+  xp: 5
+
+- id: c-l1-q06
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    printf("%d\n", 7 / 2);
+  answer: "3"
+  explanation: >-
+    7 dan 2 sama-sama int, jadi C melakukan pembagian bilangan bulat dan membuang bagian desimalnya. 3.5 menjadi 3.
+  xp: 10
+
+- id: c-l1-q07
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    double price = 2.5;
+    printf("%f\n", price);
+  answer: "2.500000"
+  explanation: >-
+    %f menampilkan 6 angka desimal secara default. Untuk menampilkan lebih sedikit, tulis
+    jumlah desimalnya: %.1f menampilkan 2.5.
+  xp: 10
+
+- id: c-l1-q08
+  type: fill_in
+  prompt: Lengkapi placeholder agar kode menampilkan huruf A.
+  code: |
+    char grade = 'A';
+    printf("____\n", grade);
+  answer: "%c"
+  explanation: >-
+    %c adalah placeholder untuk satu char.
+  xp: 10
+
+- id: c-l1-q09
+  type: multiple_choice
+  prompt: Baris mana yang benar untuk menyimpan huruf B ke dalam char?
+  options:
+    - "char grade = 'B';"
+    - 'char grade = "B";'
+    - "char grade = B;"
+    - 'int grade = "B";'
+  answer: "char grade = 'B';"
+  explanation: >-
+    Satu karakter ditulis di dalam tanda kutip satu. Tanda kutip dua membuat teks (string),
+    dan tanpa tanda kutip, C mengira B adalah nama variabel.
+  xp: 5
+
+- id: c-l1-q10
+  type: case_study
+  scenario: |-
+    Andi menghitung rata-rata dari tiga nilai kuisnya. Totalnya 250,
+    jadi rata-rata sebenarnya 83.33, tetapi kodenya menampilkan 83.00.
+  code: |
+    int total = 250;
+    int count = 3;
+    double average = total / count;
+    printf("%.2f\n", average);
+  prompt: Perubahan apa pada baris 3 yang membuat kode menampilkan 83.33?
+  options:
+    - "double average = (double) total / count;"
+    - "double average = (double) (total / count);"
+    - "double average = total / count * 1.0;"
+    - "double average = total / count + 0.0;"
+  answer: "double average = (double) total / count;"
+  explanation: >-
+    total / count dengan dua int menghasilkan 83, karena desimalnya dibuang. Mengubah total
+    menjadi double terlebih dulu membuat pembagiannya memakai desimal, sehingga hasilnya 83.33.
+    Opsi lainnya membagi lebih dulu, jadi desimalnya sudah hilang.
+  xp: 15

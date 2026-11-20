@@ -1,0 +1,6 @@
+id: python-l1
+title: Dasar Pemrograman
+order: 1
+description: Tulis program pertamamu, simpan nilai di variabel, dan kenali tipe data dasar di Python.
+unlock:
+  min_score: 70  # sementara: % jawaban benar untuk membuka Level 2

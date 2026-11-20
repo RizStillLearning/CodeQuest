@@ -1,0 +1,127 @@
+- id: python-l1-q01
+  type: multiple_choice
+  prompt: Dalam urutan apa Python menjalankan baris-baris program?
+  options:
+    - "Dari atas ke bawah, satu baris setiap kali"
+    - "Dari bawah ke atas"
+    - "Semua baris sekaligus"
+    - "Dalam urutan acak"
+  answer: "Dari atas ke bawah, satu baris setiap kali"
+  explanation: >-
+    Python mulai dari baris pertama dan menjalankan setiap baris secara berurutan sampai selesai.
+  xp: 5
+
+- id: python-l1-q02
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    print("Halo")
+    # print("Dadah")
+    print("CodeQuest")
+  answer: |-
+    Halo
+    CodeQuest
+  explanation: >-
+    Baris yang diawali # adalah komentar, jadi Python melewatinya. Hanya dua baris lainnya yang ditampilkan.
+  xp: 10
+
+- id: python-l1-q03
+  type: fill_in
+  prompt: Lengkapi kode agar menampilkan Selamat datang! di layar.
+  code: |
+    ____("Selamat datang!")
+  answer: "print"
+  explanation: >-
+    print() menampilkan apa pun yang ada di dalam tanda kurung ke layar.
+  xp: 10
+
+- id: python-l1-q04
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    xp = 50
+    xp = xp + 10
+    xp = xp + 5
+    print(xp)
+  answer: "65"
+  explanation: >-
+    xp dimulai dari 50, menjadi 60, lalu 65. Setiap baris memakai nilai saat ini untuk menghitung nilai barunya.
+  xp: 10
+
+- id: python-l1-q05
+  type: multiple_choice
+  prompt: Manakah nama variabel yang valid?
+  options:
+    - "total_xp"
+    - "total xp"
+    - "2total"
+    - "total-xp"
+  answer: "total_xp"
+  explanation: >-
+    Nama variabel tidak boleh mengandung spasi atau tanda hubung, dan tidak boleh diawali angka. Gunakan _ untuk menyambung kata.
+  xp: 5
+
+- id: python-l1-q06
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    a = "5"
+    b = "3"
+    print(a + b)
+  answer: "53"
+  explanation: >-
+    a dan b sama-sama teks karena memakai tanda kutip. Operator + pada teks akan menyambungnya, jadi "5" + "3" menjadi "53".
+  xp: 10
+
+- id: python-l1-q07
+  type: multiple_choice
+  prompt: Apa tipe dari nilai 3.0?
+  options:
+    - "int"
+    - "float"
+    - "str"
+    - "bool"
+  answer: "float"
+  explanation: >-
+    Angka yang ditulis dengan titik desimal adalah float, walaupun angka di belakang titiknya 0.
+  xp: 5
+
+- id: python-l1-q08
+  type: fill_in
+  prompt: Lengkapi kode agar menampilkan Level 3.
+  code: |
+    level = 3
+    print("Level " + ____(level))
+  answer: "str"
+  explanation: >-
+    Teks dan angka tidak bisa disambung dengan +. str() mengubah angka 3 menjadi teks "3", sehingga keduanya bisa disambung.
+  xp: 10
+
+- id: python-l1-q09
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    is_done = True
+    print(type(is_done))
+  answer: "<class 'bool'>"
+  explanation: >-
+    True dan False adalah nilai bool. type() menampilkan tipenya sebagai <class 'bool'>.
+  xp: 10
+
+- id: python-l1-q10
+  type: case_study
+  scenario: |-
+    Rina sedang membuat aplikasi kuis. Skor pengguna disimpan sebagai teks: score = "80".
+    Ia ingin menambahkan 10 poin bonus dan menampilkan 90.
+  prompt: Baris mana yang menampilkan 90?
+  options:
+    - 'print(score + 10)'
+    - 'print(score + "10")'
+    - 'print(int(score) + 10)'
+    - 'print(str(score) + 10)'
+  answer: 'print(int(score) + 10)'
+  explanation: >-
+    score berisi teks "80". int(score) mengubahnya menjadi angka 80, jadi 80 + 10 = 90.
+    Menambahkan angka ke teks menyebabkan TypeError, sedangkan menambahkan "10" hanya
+    menyambung teksnya menjadi "8010".
+  xp: 15

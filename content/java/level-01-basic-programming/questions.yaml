@@ -1,0 +1,128 @@
+- id: java-l1-q01
+  type: multiple_choice
+  prompt: Simbol apa yang mengakhiri setiap perintah di Java?
+  options:
+    - ";"
+    - "."
+    - ":"
+    - "}"
+  answer: ";"
+  explanation: >-
+    Setiap perintah Java diakhiri titik koma (;). Lupa menulisnya adalah salah satu error yang paling sering dialami pemula.
+  xp: 5
+
+- id: java-l1-q02
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    System.out.print("Code");
+    System.out.println("Quest");
+    System.out.println("!");
+  answer: |-
+    CodeQuest
+    !
+  explanation: >-
+    print tetap di baris yang sama, jadi "Quest" langsung ditampilkan setelah "Code".
+    println lalu pindah ke baris baru sebelum "!".
+  xp: 10
+
+- id: java-l1-q03
+  type: fill_in
+  prompt: Lengkapi kode agar menampilkan Selamat datang! lalu pindah ke baris baru.
+  code: |
+    System.out.____("Selamat datang!");
+  answer: "println"
+  explanation: >-
+    System.out.println() menampilkan teks, lalu pindah ke baris baru.
+  xp: 10
+
+- id: java-l1-q04
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    int xp = 50;
+    xp = xp + 10;
+    xp = xp + 5;
+    System.out.println(xp);
+  answer: "65"
+  explanation: >-
+    xp dimulai dari 50, menjadi 60, lalu 65. Setiap baris memakai nilai saat ini untuk menghitung nilai barunya.
+  xp: 10
+
+- id: java-l1-q05
+  type: multiple_choice
+  prompt: Baris mana yang menyebabkan error?
+  options:
+    - 'int age = 20;'
+    - 'String name = "Budi";'
+    - 'int score = "90";'
+    - 'double price = 2.5;'
+  answer: 'int score = "90";'
+  explanation: >-
+    Variabel int hanya bisa menyimpan bilangan bulat. "90" diapit tanda kutip, jadi nilainya teks (String), bukan int.
+  xp: 5
+
+- id: java-l1-q06
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    System.out.println(7 / 2);
+  answer: "3"
+  explanation: >-
+    7 dan 2 sama-sama int, jadi Java melakukan pembagian bilangan bulat dan membuang bagian desimalnya. 3.5 menjadi 3.
+  xp: 10
+
+- id: java-l1-q07
+  type: multiple_choice
+  prompt: Tipe apa yang sebaiknya dipakai untuk menyimpan tinggi badan seperti 1.75?
+  options:
+    - "int"
+    - "double"
+    - "String"
+    - "boolean"
+  answer: "double"
+  explanation: >-
+    1.75 punya titik desimal, jadi butuh double. int hanya bisa menyimpan bilangan bulat.
+  xp: 5
+
+- id: java-l1-q08
+  type: fill_in
+  prompt: Lengkapi kode agar variabel menyimpan teks Siti.
+  code: |
+    ____ name = "Siti";
+  answer: "String"
+  explanation: >-
+    Teks disimpan dalam String. Perhatikan huruf S kapital.
+  xp: 10
+
+- id: java-l1-q09
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    String a = "5";
+    int b = 5;
+    System.out.println(a + b);
+  answer: "55"
+  explanation: >-
+    a adalah String, jadi + menyambung kedua nilai sebagai teks, bukan menjumlahkannya. "5" dan 5 menjadi "55".
+  xp: 10
+
+- id: java-l1-q10
+  type: case_study
+  scenario: |-
+    Dimas sedang membuat aplikasi kuis. Skor pengguna disimpan sebagai teks:
+    String score = "80";
+    Ia ingin menambahkan 10 poin bonus dan menampilkan 90.
+  prompt: Baris mana yang menampilkan 90?
+  options:
+    - 'System.out.println(score + 10);'
+    - 'System.out.println(Integer.parseInt(score) + 10);'
+    - 'System.out.println((int) score + 10);'
+    - 'System.out.println(Integer.parseInt(score + 10));'
+  answer: 'System.out.println(Integer.parseInt(score) + 10);'
+  explanation: >-
+    Integer.parseInt(score) mengubah teks "80" menjadi angka 80, jadi 80 + 10 = 90.
+    score + 10 menyambung teksnya menjadi "8010". (int) tidak bisa mengubah String, jadi
+    menyebabkan error. Opsi terakhir menyambung teksnya dulu, jadi yang diubah adalah
+    "8010" dan hasilnya 8010.
+  xp: 15
