@@ -36,7 +36,7 @@ Core flow: Register/Login → Choose language → Level → Lesson → Questions
 - `docs/`: research, design notes, and decisions
 - `lang/id/`: Indonesian validation and auth messages. Rules not listed there fall back to English, so add a line when a form uses a new rule.
 - `resources/views/`: Blade pages. `layouts/` holds `app` (main), `auth` (login/register, extends `app`), and `minimal` (error pages; must not touch the database, session, or auth); `partials/` holds included pieces (navbar, footer, logo, form input, code block, language tracks, learning path, `home/`); `errors/` holds the friendly error pages, which extend `errors/layout`.
-- `resources/css/app.css`: Bootstrap 5.3 theme tokens (`--cq-*`) and CodeQuest component styles. Icons are Bootstrap Icons; there is no Tailwind.
+- `resources/css/app.css`: Bootstrap 5.3 theme tokens (`--cq-*`) and CodeQuest component styles. Icons are Bootstrap Icons; there is no Tailwind. Fonts (Plus Jakarta Sans, JetBrains Mono) are bundled from npm via Fontsource; don't load fonts from a CDN.
 - `resources/js/`: Bootstrap JS and small page scripts, e.g. `home/try-question.js` and `forms.js`
 - `tests/`: PHPUnit tests, run on in-memory SQLite (never the dev database). `tests/Feature/Content/ContentFilesTest.php` checks the real `content/` files against the rules in `content/README.md`; `tests/Feature/RoutesTest.php` checks that every route uses a controller.
 

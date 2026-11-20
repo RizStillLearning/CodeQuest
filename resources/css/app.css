@@ -1,6 +1,11 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
 @import 'bootstrap-icons/font/bootstrap-icons.min.css';
 
+/* Fonts are bundled by Vite (no font CDN), so pages work offline and never
+   depend on a third-party server. Variable fonts: one file covers every weight. */
+@import '@fontsource-variable/plus-jakarta-sans';
+@import '@fontsource-variable/jetbrains-mono';
+
 /* ==========================================================================
    Design tokens
    Bootstrap is themed through its CSS variables; CodeQuest's own components
@@ -43,7 +48,7 @@
     --cq-radius-lg: 1.5rem;
     --cq-shadow: 0 1px 2px rgba(28, 26, 51, .05), 0 6px 20px rgba(28, 26, 51, .05);
     --cq-shadow-lg: 0 2px 6px rgba(28, 26, 51, .04), 0 28px 56px -16px rgba(48, 36, 140, .28);
-    --cq-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --cq-font-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
     --bs-primary: var(--cq-primary);
     --bs-primary-rgb: var(--cq-primary-rgb);
@@ -54,7 +59,7 @@
     --bs-link-color-rgb: var(--cq-primary-rgb);
     --bs-link-hover-color: var(--cq-primary-active);
     --bs-link-hover-color-rgb: 63, 49, 176;
-    --bs-body-font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --bs-body-font-family: 'Plus Jakarta Sans Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
     --bs-font-monospace: var(--cq-font-mono);
     --bs-body-color: var(--cq-ink);
     --bs-body-color-rgb: 28, 26, 51;
