@@ -56,6 +56,8 @@ Every question has `id`, `type`, `prompt`, `answer`, `explanation`, and `xp`.
   the user types, shown to the learner (for example "Jika pengguna mengetik 7, ...").
 - In Java and C questions, `code` shows only the lines inside `main()`, unless the
   question is about the program's structure. Java code assumes `import java.util.Scanner;`.
+- From Level 4, code that defines functions shows the functions and `main()` together:
+  in Java without the `public class Main { }` around them, and in C without the `#include` lines.
 - Answers are compared after trimming whitespace at the start and end.
 - `explanation` is shown after the user answers, whether they were right or wrong.
 

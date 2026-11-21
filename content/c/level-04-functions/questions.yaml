@@ -1,0 +1,210 @@
+- id: c-l4-q01
+  type: multiple_choice
+  prompt: Apa arti kedua kata void pada void greet(void)?
+  options:
+    - "Fungsi ini tidak mengembalikan nilai dan tidak punya parameter"
+    - "Fungsi ini kosong dan tidak bisa dipanggil"
+    - "Fungsi ini mengembalikan 0 dan punya satu parameter"
+    - "Fungsi ini hanya bisa dipanggil sekali"
+  answer: "Fungsi ini tidak mengembalikan nilai dan tidak punya parameter"
+  explanation: >-
+    void yang pertama adalah return type: tidak ada nilai yang dikembalikan. (void) di dalam
+    tanda kurung berarti fungsi ini tidak menerima parameter.
+  xp: 5
+
+- id: c-l4-q02
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    void greet(void) {
+        printf("Halo\n");
+    }
+
+    int main(void) {
+        printf("A\n");
+        greet();
+        greet();
+        printf("B\n");
+        return 0;
+    }
+  answer: |-
+    A
+    Halo
+    Halo
+    B
+  explanation: >-
+    Program dimulai dari main. C menampilkan A, lalu menjalankan isi greet() dua kali,
+    lalu menampilkan B.
+  xp: 10
+
+- id: c-l4-q03
+  type: fill_in
+  prompt: Lengkapi kode agar fungsi mengembalikan hasil perkalian a dan b.
+  code: |
+    int multiply(int a, int b) {
+        ____ a * b;
+    }
+
+    int main(void) {
+        printf("%d\n", multiply(3, 4));
+        return 0;
+    }
+  answer: "return"
+  explanation: >-
+    return mengirim hasil a * b kembali ke tempat fungsi dipanggil, jadi kode menampilkan 12.
+  xp: 10
+
+- id: c-l4-q04
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    int add_xp(int xp, int bonus) {
+        return xp + bonus;
+    }
+
+    int main(void) {
+        printf("%d\n", add_xp(add_xp(10, 5), 20));
+        return 0;
+    }
+  answer: "35"
+  explanation: >-
+    Pemanggilan yang di dalam dijalankan lebih dulu: add_xp(10, 5) mengembalikan 15.
+    Lalu add_xp(15, 20) mengembalikan 35.
+  xp: 10
+
+- id: c-l4-q05
+  type: multiple_choice
+  prompt: Mengapa ada baris void greet(void); di atas main pada kode ini?
+  code: |
+    void greet(void);
+
+    int main(void) {
+        greet();
+        return 0;
+    }
+
+    void greet(void) {
+        printf("Halo!\n");
+    }
+  options:
+    - "Agar compiler sudah mengenal greet saat main memanggilnya"
+    - "Agar greet dijalankan dua kali"
+    - "Agar greet dijalankan sebelum main"
+    - "Baris itu tidak berguna dan bisa dihapus tanpa masalah"
+  answer: "Agar compiler sudah mengenal greet saat main memanggilnya"
+  explanation: >-
+    Baris itu adalah deklarasi (prototype). C membaca dari atas ke bawah, jadi tanpa deklarasi,
+    compiler belum mengenal greet saat main memanggilnya. Program tetap dimulai dari main.
+  xp: 5
+
+- id: c-l4-q06
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    char get_grade(int score) {
+        if (score >= 80) {
+            return 'A';
+        }
+        return 'B';
+    }
+
+    int main(void) {
+        printf("%c\n", get_grade(90));
+        printf("%c\n", get_grade(50));
+        return 0;
+    }
+  answer: |-
+    A
+    B
+  explanation: >-
+    return langsung menghentikan fungsi. Untuk 90, fungsi berhenti di return 'A'. Untuk 50,
+    kondisi if salah, jadi fungsi lanjut ke return 'B'.
+  xp: 10
+
+- id: c-l4-q07
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    void level_up(void) {
+        int level = 2;
+        printf("%d\n", level);
+    }
+
+    int main(void) {
+        int level = 1;
+        level_up();
+        printf("%d\n", level);
+        return 0;
+    }
+  answer: |-
+    2
+    1
+  explanation: >-
+    level di dalam level_up adalah variabel lokal yang berbeda dari level di main. level_up
+    menampilkan 2, lalu main menampilkan level miliknya sendiri, yaitu 1.
+  xp: 10
+
+- id: c-l4-q08
+  type: multiple_choice
+  prompt: Mana penulisan fungsi yang benar untuk menerima dua int dan mengembalikan jumlahnya?
+  options:
+    - "int add(int a, int b) { return a + b; }"
+    - "void add(int a, int b) { return a + b; }"
+    - "int add(a, b) { return a + b; }"
+    - "int add(int a, int b) { a + b; }"
+  answer: "int add(int a, int b) { return a + b; }"
+  explanation: >-
+    Fungsi yang mengembalikan int harus punya return type int, setiap parameter harus ditulis
+    dengan tipenya, dan hasilnya harus dikembalikan dengan return. Tanpa return, hasil
+    fungsinya menjadi nilai acak.
+  xp: 5
+
+- id: c-l4-q09
+  type: fill_in
+  prompt: Lengkapi deklarasi fungsi di baris pertama.
+  code: |
+    ____ show_score(int score);
+
+    int main(void) {
+        show_score(90);
+        return 0;
+    }
+
+    void show_score(int score) {
+        printf("Skor: %d\n", score);
+    }
+  answer: "void"
+  explanation: >-
+    Deklarasi harus sama persis dengan fungsinya: return type, nama, dan parameternya.
+    show_score tidak mengembalikan nilai, jadi return type-nya void.
+  xp: 10
+
+- id: c-l4-q10
+  type: case_study
+  scenario: |-
+    Andi membuat fungsi untuk menambah 10 XP bonus. Ia memanggil fungsinya, tetapi XP yang
+    ditampilkan tetap 50, bukan 60.
+  code: |
+    void add_bonus(int xp) {
+        xp = xp + 10;
+    }
+
+    int main(void) {
+        int my_xp = 50;
+        add_bonus(my_xp);
+        printf("%d\n", my_xp);
+        return 0;
+    }
+  prompt: Bagaimana cara memperbaikinya?
+  options:
+    - "Ubah fungsinya menjadi int add_bonus(int xp) { return xp + 10; }, lalu tulis my_xp = add_bonus(my_xp);"
+    - "Ganti nama parameter xp menjadi my_xp"
+    - "Panggil add_bonus(my_xp); dua kali"
+    - 'Tambahkan printf("%d\n", xp); di dalam add_bonus'
+  answer: "Ubah fungsinya menjadi int add_bonus(int xp) { return xp + 10; }, lalu tulis my_xp = add_bonus(my_xp);"
+  explanation: >-
+    add_bonus hanya menerima salinan nilai my_xp, jadi mengubah xp tidak mengubah my_xp.
+    Dengan return, fungsi mengembalikan 60, lalu hasilnya disimpan ke my_xp. Mengganti nama
+    parameter tetap membuat salinan, memanggilnya dua kali tetap tidak mengubah apa-apa, dan
+    printf di dalam fungsi memang menampilkan 60, tetapi my_xp di main tetap 50.
+  xp: 15
