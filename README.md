@@ -1,66 +1,123 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# CodeQuest
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+CodeQuest is a gamified web platform for learning basic programming. Learners pick a
+language, then work through a path of levels: short, practical lessons followed by
+practice questions with immediate feedback. The interface is in Indonesian and styled
+like a retro terminal.
 
-## About Laravel
+It is built for university and school students, from complete beginners to fairly
+confident learners, and aims at the problems they reported most: material that is too
+theoretical, losing motivation, and not knowing what to learn next.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Accounts:** register, sign in, and sign out.
+- **Languages:** Python, Java, and C, each with its own learning path.
+- **Learning path:** one node per level. Each level opens a page with its lessons and
+  practice, also drawn as a path.
+- **Lessons:** start with a code example and its output, then explain.
+- **Practice:** four question types (predict the output, fill in the code, multiple
+  choice, and case studies). Answers are checked on the server, and every answer gets
+  an explanation, right or wrong.
+- **Unlocking in order:** each lesson, then the level's practice, then the next level.
+  The practice passes with at least the level's minimum score (70% for now), and
+  finished steps stay open for review.
+- **Saved progress:** every completed lesson and every answer is saved straight away.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Not built yet: XP totals, the progress page, the leaderboard, and the forum. Their
+pages show "segera hadir".
 
-## Learning Laravel
+## Tech stack
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Laravel 12 on PHP 8.3
+- Blade views with Bootstrap 5.3, built with Vite
+- MySQL (via XAMPP) for development
+- PHPUnit for tests, on an in-memory SQLite database
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Getting started
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+You need PHP 8.3, Composer, Node.js, and MySQL (XAMPP works).
 
-## Laravel Sponsors
+1. Clone the repository and create the environment file:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+   ```bash
+   git clone https://github.com/RizStillLearning/CodeQuest.git
+   cd CodeQuest
+   cp .env.example .env
+   ```
 
-### Premium Partners
+2. Create a MySQL database named `codequest` (for example in phpMyAdmin), then point
+   `.env` at it:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+   ```ini
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=codequest
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
 
-## Contributing
+3. Install everything, generate the app key, run the migrations, and build the assets:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+   ```bash
+   composer setup
+   ```
 
-## Code of Conduct
+4. Start the app and open http://localhost:8000:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+   ```bash
+   composer dev
+   ```
 
-## Security Vulnerabilities
+   This runs the web server, queue worker, log viewer, and Vite together. On Windows
+   the log viewer (Laravel Pail) stops straight away because PHP on Windows has no
+   `pcntl` extension; the rest keeps running. You can also run `php artisan serve` and
+   `npm run dev` in two terminals instead.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Commands
 
-## License
+| Command | What it does |
+|---|---|
+| `composer setup` | First-time setup: dependencies, `.env`, app key, migrations, assets |
+| `composer dev` | Run the app locally |
+| `composer test` | Run all tests |
+| `php artisan test --filter=ProgressTest` | Run one test class |
+| `php artisan migrate` | Apply new migrations |
+| `npm run build` | Build the frontend assets |
+| `./vendor/bin/pint --dirty` | Format the PHP files you changed |
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Writing lessons and questions
+
+All learning content lives in [`content/`](content/) as plain files, so it can be
+changed without touching code:
+
+```text
+content/
+  python/
+    level-01-basic-programming/
+      level.yaml        title, description, and the score needed to pass
+      lessons/          one Markdown file per lesson
+      questions.yaml    the level's practice questions
+```
+
+The file formats and writing rules are in [`content/README.md`](content/README.md).
+The site reads the files on every request, so a saved change shows up on the next page
+refresh. Run `composer test` after editing: the tests check every file against those
+rules, open every lesson and question page, and confirm that each question's own
+answer is accepted.
+
+## Project structure
+
+| Path | Contents |
+|---|---|
+| `app/Content/` | Reads `content/` into languages, levels, lessons, and questions |
+| `app/Progress/` | The unlock rule: what a learner has done and what they may open |
+| `app/Http/Controllers/` | One controller per page |
+| `app/ViewModels/` | Display logic for the learning paths |
+| `app/Models/` | Users, completed steps, and saved answers |
+| `resources/views/` | Blade pages, layouts, and partials |
+| `resources/css/app.css` | The retro terminal theme |
+| `content/` | Lessons and questions |
+| `docs/` | User research and design references |
+| `tests/` | Feature and unit tests |
