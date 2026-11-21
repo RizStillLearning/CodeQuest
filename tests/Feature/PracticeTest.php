@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Content\ContentRepository;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -138,13 +139,29 @@ class PracticeTest extends TestCase
             ->assertSee('href="'.url('/belajar/python/2').'"', false)
             ->assertSee('href="'.url('/belajar/python').'"', false);
 
-        // Level 2 is the last level.
-        $this->readLessons('python', 2);
-        $this->answerQuestions('python', 2);
+        $levels = app(ContentRepository::class)->languages()['python']->levels;
 
-        $this->get('/belajar/python/2/latihan/hasil')
+        foreach (array_slice($levels, 1) as $level) {
+            $this->readLessons('python', $level->order);
+            $this->answerQuestions('python', $level->order);
+        }
+
+        // The last level has no next one.
+        $this->get('/belajar/python/'.end($levels)->order.'/latihan/hasil')
             ->assertDontSee('Lanjut ke Level')
             ->assertSee('Kembali ke jalur belajar');
+    }
+
+    public function test_question_shows_what_the_user_types_when_the_code_reads_input(): void
+    {
+        $this->answerQuestions('python', 1);
+        $this->readLessons('python', 2);
+        $this->answerQuestions('python', 2);
+        $this->readLessons('python', 3);
+
+        $this->get('/belajar/python/3/latihan/2')
+            ->assertOk()
+            ->assertSeeInOrder(['number = int(input())', 'Input pengguna', '<kbd class="cq-code-input-value">7</kbd>'], false);
     }
 
     public function test_results_at_the_minimum_score_pass(): void

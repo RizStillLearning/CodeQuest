@@ -20,7 +20,7 @@
                 <h1 class="cq-study-title" id="cq-question-prompt">{{ $question->prompt }}</h1>
 
                 @if ($question->code)
-                    @include('partials.code-block', ['code' => $question->code, 'fileName' => $language->fileName])
+                    @include('partials.code-block', ['code' => $question->code, 'fileName' => $language->fileName, 'input' => $question->input])
                 @endif
 
                 @if ($attempt === null)

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Content\ContentRepository;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -27,6 +28,8 @@ class PathPageTest extends TestCase
         $this->actingAs(User::factory()->create());
 
         foreach (['python' => 'Python', 'java' => 'Java', 'c' => 'C'] as $key => $name) {
+            $levelCount = count(app(ContentRepository::class)->languages()[$key]->levels);
+
             $this->get("/belajar/{$key}")
                 ->assertOk()
                 ->assertViewIs('paths.show')
@@ -40,7 +43,7 @@ class PathPageTest extends TestCase
                     '(terkunci)',
                     'Sintaks Dasar',
                     'is-soon is-locked',
-                    'Level 3',
+                    'Level '.($levelCount + 1),
                 ], false)
                 ->assertDontSee('is-lesson', false)
                 ->assertDontSee('is-practice', false)

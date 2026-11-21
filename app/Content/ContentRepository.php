@@ -182,6 +182,7 @@ class ContentRepository
             scenario: $this->optionalText($data, 'scenario', $file, $id),
             options: $type->hasOptions() ? $this->textList($data, 'options', $file, $id) : [],
             alsoAccept: array_key_exists('also_accept', $data) ? $this->textList($data, 'also_accept', $file, $id) : [],
+            input: $this->optionalText($data, 'input', $file, $id),
         );
     }
 

@@ -30,7 +30,7 @@
             @endif
 
             @if ($question->code)
-                @include('partials.code-block', ['code' => $question->code, 'fileName' => $language->fileName])
+                @include('partials.code-block', ['code' => $question->code, 'fileName' => $language->fileName, 'input' => $question->input])
             @endif
         </div>
 

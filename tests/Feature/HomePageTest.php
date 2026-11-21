@@ -26,7 +26,7 @@ class HomePageTest extends TestCase
         $response->assertSeeInOrder(['id="cq-tab-python"', 'id="cq-tab-java"', 'id="cq-tab-c"'], false);
         // The preview is Level 1's path, ending with Level 2 as a teaser.
         $response->assertSeeInOrder(['Level 1', 'Dasar Pemrograman', 'Pengenalan Pemrograman', '10 soal latihan', 'Level 2', 'Sintaks Dasar']);
-        $response->assertSee('2 level tersedia');
+        $response->assertSee(count(app(ContentRepository::class)->languages()['python']->levels).' level tersedia');
     }
 
     public function test_homepage_shows_the_configured_demo_question(): void

@@ -8,6 +8,7 @@ final readonly class Question
      * @param  string  $language  language key, e.g. "python"
      * @param  list<string>  $options  choices for multiple_choice and case_study
      * @param  list<string>  $alsoAccept  other correct answers for fill_in
+     * @param  ?string  $input  what the user types when predict_output code reads keyboard input
      */
     public function __construct(
         public string $id,
@@ -21,6 +22,7 @@ final readonly class Question
         public ?string $scenario = null,
         public array $options = [],
         public array $alsoAccept = [],
+        public ?string $input = null,
     ) {}
 
     /**

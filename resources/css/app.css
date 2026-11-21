@@ -1255,6 +1255,32 @@ small {
     user-select: none;
 }
 
+/* What the user types, under the code that reads it. */
+.cq-code-input {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: .25rem .75rem;
+    padding: .5rem .75rem;
+    border-top: 2px solid var(--cq-ink);
+    background: var(--cq-mint);
+    color: var(--cq-ink);
+}
+
+.cq-code-input-label {
+    font-family: var(--cq-font-pixel);
+    font-size: .5rem;
+    text-transform: uppercase;
+}
+
+.cq-code-input-value {
+    padding: 0;
+    background: none;
+    color: inherit;
+    font-size: 1.5rem;
+    white-space: pre-wrap;
+}
+
 .cq-blank {
     padding: 0 .125rem;
     background: var(--cq-peach);
