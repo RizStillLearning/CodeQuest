@@ -33,7 +33,7 @@
             {{-- Hidden until JS is ready, so it never shows as a dead button. --}}
             <button type="button" class="cq-reveal" data-reveal="field-{{ $name }}" aria-controls="field-{{ $name }}" aria-pressed="false"
                     aria-label="Tampilkan kata sandi" data-label-show="Tampilkan kata sandi" data-label-hide="Sembunyikan kata sandi" hidden>
-                <i class="bi bi-eye" aria-hidden="true"></i>
+                <i class="pixelart-icons-font-eye" aria-hidden="true"></i>
             </button>
         @endif
     </div>

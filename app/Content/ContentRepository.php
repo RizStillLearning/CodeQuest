@@ -128,12 +128,18 @@ class ContentRepository
         }
 
         $data = $this->mapping($this->parseYaml($matches[1], $file), $file);
+        $body = trim(substr($contents, strlen($matches[0])));
+
+        if ($body === '') {
+            throw ContentException::invalid($this->relative($file), 'the lesson has no content after the front matter');
+        }
 
         return new Lesson(
             id: $this->text($data, 'id', $file),
             title: $this->text($data, 'title', $file),
             order: $this->integer($data, 'order', $file),
             xp: $this->integer($data, 'xp', $file),
+            body: $body,
         );
     }
 
@@ -176,6 +182,7 @@ class ContentRepository
             scenario: $this->optionalText($data, 'scenario', $file, $id),
             options: $type->hasOptions() ? $this->textList($data, 'options', $file, $id) : [],
             alsoAccept: array_key_exists('also_accept', $data) ? $this->textList($data, 'also_accept', $file, $id) : [],
+            input: $this->optionalText($data, 'input', $file, $id),
         );
     }
 

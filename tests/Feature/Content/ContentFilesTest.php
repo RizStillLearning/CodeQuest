@@ -67,6 +67,20 @@ class ContentFilesTest extends TestCase
         }
     }
 
+    public function test_predict_output_questions_say_what_the_user_types_when_the_code_reads_input(): void
+    {
+        foreach ($this->allQuestions() as $question) {
+            $readsInput = (bool) preg_match('/\binput\(|\bscanf\(|\.next(Int|Line|Double)?\(/', (string) $question->code);
+
+            if ($question->input !== null) {
+                $this->assertSame('predict_output', $question->type->value, "{$question->id}: only predict_output questions have an input");
+                $this->assertTrue($readsInput, "{$question->id}: has an input but its code doesn't read one");
+            } elseif ($question->type->value === 'predict_output') {
+                $this->assertFalse($readsInput, "{$question->id}: code reads input but the question has no input");
+            }
+        }
+    }
+
     public function test_homepage_demo_question_exists(): void
     {
         $id = config('codequest.home.demo_question');

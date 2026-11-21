@@ -8,6 +8,7 @@ final readonly class Question
      * @param  string  $language  language key, e.g. "python"
      * @param  list<string>  $options  choices for multiple_choice and case_study
      * @param  list<string>  $alsoAccept  other correct answers for fill_in
+     * @param  ?string  $input  what the user types when predict_output code reads keyboard input
      */
     public function __construct(
         public string $id,
@@ -21,6 +22,7 @@ final readonly class Question
         public ?string $scenario = null,
         public array $options = [],
         public array $alsoAccept = [],
+        public ?string $input = null,
     ) {}
 
     /**
@@ -32,6 +34,23 @@ final readonly class Question
     public function acceptedAnswers(): array
     {
         return [$this->answer, ...$this->alsoAccept];
+    }
+
+    /**
+     * Server-side check for practice answers. Same rule as content/README.md:
+     * compare after trimming the start and end; line endings don't matter.
+     */
+    public function isCorrect(string $answer): bool
+    {
+        $normalize = fn (string $text) => trim(str_replace("\r\n", "\n", $text));
+
+        foreach ($this->acceptedAnswers() as $accepted) {
+            if ($normalize($accepted) === $normalize($answer)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function expectsMultilineAnswer(): bool

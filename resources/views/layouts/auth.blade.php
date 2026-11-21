@@ -24,26 +24,26 @@
                     <h2 id="cq-auth-aside-title">Belajarmu tersimpan, langkahmu jelas.</h2>
                     <ul class="cq-auth-perks">
                         <li>
-                            <span class="cq-perk-icon is-xp" aria-hidden="true"><i class="bi bi-lightning-charge-fill"></i></span>
+                            <span class="cq-perk-icon is-xp" aria-hidden="true"><i class="pixelart-icons-font-zap"></i></span>
                             <div><strong>XP yang terus bertambah</strong><span>Setiap pelajaran dan soal yang selesai menambah XP-mu.</span></div>
                         </li>
                         <li>
-                            <span class="cq-perk-icon" aria-hidden="true"><i class="bi bi-signpost-split-fill"></i></span>
+                            <span class="cq-perk-icon" aria-hidden="true"><i class="pixelart-icons-font-road-sign"></i></span>
                             <div><strong>Jalur level demi level</strong><span>Selesaikan satu level untuk membuka level berikutnya.</span></div>
                         </li>
                         <li>
-                            <span class="cq-perk-icon" aria-hidden="true"><i class="bi bi-bookmark-check-fill"></i></span>
+                            <span class="cq-perk-icon" aria-hidden="true"><i class="pixelart-icons-font-bookmark"></i></span>
                             <div><strong>Lanjut kapan saja</strong><span>Progresmu tersimpan setelah setiap soal.</span></div>
                         </li>
                     </ul>
                     <div class="cq-mini-path" aria-hidden="true">
-                        <span class="cq-mini-node is-done"><i class="bi bi-check-lg"></i></span>
+                        <span class="cq-mini-node is-done"><i class="pixelart-icons-font-check"></i></span>
                         <span class="cq-mini-link"></span>
-                        <span class="cq-mini-node is-open"><i class="bi bi-play-fill"></i></span>
+                        <span class="cq-mini-node is-open"><i class="pixelart-icons-font-play"></i></span>
                         <span class="cq-mini-link"></span>
-                        <span class="cq-mini-node"><i class="bi bi-lock-fill"></i></span>
+                        <span class="cq-mini-node"><i class="pixelart-icons-font-lock"></i></span>
                         <span class="cq-mini-link"></span>
-                        <span class="cq-mini-node"><i class="bi bi-trophy-fill"></i></span>
+                        <span class="cq-mini-node"><i class="pixelart-icons-font-trophy"></i></span>
                     </div>
                 </aside>
             </div>

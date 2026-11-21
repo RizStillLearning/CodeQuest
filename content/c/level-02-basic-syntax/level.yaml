@@ -1,0 +1,6 @@
+id: c-l2
+title: Sintaks Dasar
+order: 2
+description: Hitung dengan operator, buat keputusan dengan if, dan ulangi perintah dengan perulangan.
+unlock:
+  min_score: 70  # sementara: % jawaban benar untuk membuka Level 3

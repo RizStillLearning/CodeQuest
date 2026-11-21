@@ -1,0 +1,166 @@
+- id: python-l4-q01
+  type: multiple_choice
+  prompt: Kapan kode di dalam sebuah fungsi dijalankan?
+  options:
+    - "Saat fungsinya dipanggil"
+    - "Saat fungsinya dibuat dengan def"
+    - "Otomatis setiap kali program dimulai"
+    - "Hanya jika fungsinya punya return"
+  answer: "Saat fungsinya dipanggil"
+  explanation: >-
+    def hanya membuat fungsi. Isinya baru dijalankan saat fungsinya dipanggil, misalnya
+    dengan greet(), dan dijalankan lagi setiap kali dipanggil.
+  xp: 5
+
+- id: python-l4-q02
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    def greet():
+        print("Halo")
+
+    print("A")
+    greet()
+    greet()
+    print("B")
+  answer: |-
+    A
+    Halo
+    Halo
+    B
+  explanation: >-
+    Python menampilkan A, lalu menjalankan isi greet() dua kali, lalu menampilkan B.
+    Membuat fungsi dengan def tidak menampilkan apa-apa.
+  xp: 10
+
+- id: python-l4-q03
+  type: fill_in
+  prompt: Lengkapi kode agar fungsi mengembalikan hasil perkalian a dan b.
+  code: |
+    def multiply(a, b):
+        ____ a * b
+
+    print(multiply(3, 4))
+  answer: "return"
+  explanation: >-
+    return mengirim hasil a * b kembali ke tempat fungsi dipanggil, jadi kode menampilkan 12.
+  xp: 10
+
+- id: python-l4-q04
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    def add_xp(xp, bonus):
+        return xp + bonus
+
+    print(add_xp(30, 5) + add_xp(10, 5))
+  answer: "50"
+  explanation: >-
+    add_xp(30, 5) mengembalikan 35 dan add_xp(10, 5) mengembalikan 15. Hasil dari fungsi bisa
+    langsung dipakai untuk menghitung, jadi 35 + 15 = 50.
+  xp: 10
+
+- id: python-l4-q05
+  type: multiple_choice
+  prompt: Pada pemanggilan add_xp(50, 10), berapa nilai parameter bonus?
+  code: |
+    def add_xp(xp, bonus):
+        return xp + bonus
+  options:
+    - "10"
+    - "50"
+    - "60"
+    - "Tidak ada nilainya"
+  answer: "10"
+  explanation: >-
+    Argumen dimasukkan sesuai urutan. Argumen pertama, 50, masuk ke xp, dan argumen kedua,
+    10, masuk ke bonus.
+  xp: 5
+
+- id: python-l4-q06
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    def get_grade(score):
+        if score >= 80:
+            return "A"
+        return "B"
+        print("C")
+
+    print(get_grade(90))
+    print(get_grade(50))
+  answer: |-
+    A
+    B
+  explanation: >-
+    return langsung menghentikan fungsi. Untuk 90, fungsi berhenti di return "A". Untuk 50,
+    fungsi berhenti di return "B". Baris print("C") tidak pernah dijalankan.
+  xp: 10
+
+- id: python-l4-q07
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    def change():
+        xp = 100
+
+    xp = 5
+    change()
+    print(xp)
+  answer: "5"
+  explanation: >-
+    xp di dalam change() adalah variabel lokal yang berbeda dari xp di luar. Mengubahnya
+    tidak mengubah xp di luar fungsi, jadi yang ditampilkan tetap 5.
+  xp: 10
+
+- id: python-l4-q08
+  type: multiple_choice
+  prompt: Apa hasil dari fungsi yang tidak punya return?
+  options:
+    - "None"
+    - "0"
+    - "Teks kosong"
+    - "Error"
+  answer: "None"
+  explanation: >-
+    Fungsi tanpa return tetap bisa dipanggil, tetapi hasilnya None, artinya "tidak ada nilai".
+  xp: 5
+
+- id: python-l4-q09
+  type: fill_in
+  prompt: Lengkapi kode untuk membuat fungsi bernama show_score.
+  code: |
+    ____ show_score(score):
+        print("Skor:", score)
+
+    show_score(90)
+  answer: "def"
+  explanation: >-
+    def dipakai untuk membuat fungsi, diikuti nama fungsi, parameter di dalam tanda kurung,
+    dan titik dua.
+  xp: 10
+
+- id: python-l4-q10
+  type: case_study
+  scenario: |-
+    Budi membuat fungsi untuk menghitung XP bonus dari streak, lalu menjumlahkannya dengan
+    XP pengguna. Programnya menampilkan 15, lalu muncul error
+    TypeError: unsupported operand type(s) for +: 'int' and 'NoneType', dan program berhenti.
+  code: |
+    def bonus_xp(streak):
+        print(streak * 5)
+
+    total = 100 + bonus_xp(3)
+    print(total)
+  prompt: Bagaimana cara memperbaikinya?
+  options:
+    - "Ganti print(streak * 5) menjadi return streak * 5"
+    - 'Ganti bonus_xp(3) menjadi bonus_xp("3")'
+    - "Tukar urutannya menjadi total = bonus_xp(3) + 100"
+    - "Tambahkan print(bonus_xp(3)) sebelum baris total"
+  answer: "Ganti print(streak * 5) menjadi return streak * 5"
+  explanation: >-
+    bonus_xp hanya menampilkan 15 dengan print, tetapi tidak mengembalikan apa-apa, jadi
+    hasilnya None. 100 + None menyebabkan error. Dengan return, fungsi mengembalikan 15 dan
+    total menjadi 115. Opsi lainnya tetap menjumlahkan angka dengan None.
+  xp: 15

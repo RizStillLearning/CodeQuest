@@ -1,24 +1,14 @@
 {{--
-    Language tabs, each with a level card and the level's learning path.
-    Used on the homepage (guests) and on /belajar (signed-in learners).
+    Homepage preview: language tabs, each with a level card and the level's learning path.
 
     @include('partials.language-tracks', [
         'paths' => $paths,         list of App\ViewModels\LearningPath, one per language
-        'startUrl' => $url,        where the start button goes; null shows it as not available yet
+        'startUrl' => $url,        where the start buttons go
     ])
 --}}
 
 @if ($paths === [])
-    <div class="cq-notice" role="status">
-        <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
-        <div>
-            <p class="fw-bold mb-1">Daftar bahasa belum bisa dimuat.</p>
-            <p class="mb-3">Coba muat ulang halaman ini sebentar lagi.</p>
-            <a href="{{ url()->current() }}" class="btn btn-primary btn-sm">
-                <i class="bi bi-arrow-clockwise" aria-hidden="true"></i> Muat ulang
-            </a>
-        </div>
-    </div>
+    @include('partials.content-notice')
 @else
     <ul class="nav cq-lang-tabs" role="tablist">
         @foreach ($paths as $path)
@@ -40,54 +30,15 @@
                 <div class="row g-4 align-items-start">
                     <div class="col-lg-5">
                         <div class="cq-lang-card">
-                            <div class="d-flex align-items-center gap-3 mb-3">
-                                <span class="cq-lang-badge cq-lang-{{ $path->language->key }}" aria-hidden="true">.{{ $path->language->extension() }}</span>
-                                <div>
-                                    <h3 class="h4 mb-0">{{ $path->language->name }}</h3>
-                                    <p class="small text-body-secondary mb-0">{{ count($path->language->levels) }} level tersedia</p>
-                                </div>
-                            </div>
-                            <p class="text-body-secondary">{{ $path->language->tagline }}</p>
-
-                            <div class="cq-level-box">
-                                <span class="cq-kicker mb-1">Level {{ $path->level->order }}</span>
-                                <h4>{{ $path->level->title }}</h4>
-                                <p>{{ $path->level->description }}</p>
-                                <ul class="cq-stats">
-                                    <li><i class="bi bi-book-half" aria-hidden="true"></i> <strong>{{ count($path->level->lessons) }}</strong> pelajaran</li>
-                                    <li><i class="bi bi-patch-question-fill" aria-hidden="true"></i> <strong>{{ count($path->level->questions) }}</strong> soal</li>
-                                    <li class="is-xp"><i class="bi bi-lightning-charge-fill" aria-hidden="true"></i> <strong>{{ $path->level->totalXp() }}</strong> XP</li>
-                                </ul>
-                            </div>
-
-                            @if ($startUrl)
-                                <a href="{{ $startUrl }}" class="btn btn-primary w-100">
-                                    Mulai belajar {{ $path->language->name }} <i class="bi bi-arrow-right" aria-hidden="true"></i>
-                                </a>
-                            @else
-                                <button type="button" class="btn btn-primary w-100" disabled aria-describedby="cq-start-note-{{ $path->language->key }}">
-                                    Mulai belajar {{ $path->language->name }} <i class="bi bi-arrow-right" aria-hidden="true"></i>
-                                </button>
-                                <p class="cq-start-note" id="cq-start-note-{{ $path->language->key }}">
-                                    <i class="bi bi-hourglass-split" aria-hidden="true"></i> Halaman pelajaran sedang kami siapkan.
-                                </p>
-                            @endif
+                            @include('partials.language-summary', ['language' => $path->language])
+                            @include('partials.level-summary', ['level' => $path->levels[0]])
+                            <a href="{{ $startUrl }}" class="btn btn-primary w-100">
+                                Mulai belajar {{ $path->language->name }} <i class="pixelart-icons-font-arrow-right" aria-hidden="true"></i>
+                            </a>
                         </div>
                     </div>
                     <div class="col-lg-7">
-                        <div class="cq-path-panel">
-                            <div class="cq-path-panel-head">
-                                <div>
-                                    <span class="cq-kicker mb-0">Jalur belajar</span>
-                                    <h4 class="mb-0">Level {{ $path->level->order }}: {{ $path->level->title }}</h4>
-                                </div>
-                                <ul class="cq-legend" aria-label="Keterangan">
-                                    <li><span class="cq-legend-dot is-open" aria-hidden="true"></span> Terbuka</li>
-                                    <li><span class="cq-legend-dot is-locked" aria-hidden="true"></span> Terkunci</li>
-                                </ul>
-                            </div>
-                            @include('partials.learning-path', ['path' => $path])
-                        </div>
+                        @include('partials.path-panel', ['path' => $path, 'title' => 'Materi level 1'])
                     </div>
                 </div>
             </div>

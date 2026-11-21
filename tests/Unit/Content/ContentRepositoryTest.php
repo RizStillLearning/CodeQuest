@@ -161,7 +161,27 @@ class ContentRepositoryTest extends TestCase
         $this->assertSame("____(\"Halo\")\n", $question->code);
         $this->assertSame(['print', 'print '], $question->acceptedAnswers());
         $this->assertFalse($question->expectsMultilineAnswer());
+        $this->assertNull($question->input);
         $this->assertNull($repository->findQuestion('does-not-exist'));
+    }
+
+    public function test_question_input_is_what_the_user_types(): void
+    {
+        $this->writeLevel('python', 'level-01-basics', order: 1);
+        $this->write('python/level-01-basics/questions.yaml', <<<'YAML'
+            - id: python-l1-q01
+              type: predict_output
+              prompt: Jika pengguna mengetik 7, apa outputnya?
+              input: "7"
+              code: |
+                print(int(input()) * 2)
+              answer: "14"
+              explanation: >-
+                7 * 2 = 14.
+              xp: 10
+            YAML);
+
+        $this->assertSame('7', $this->repository('python')->findQuestion('python-l1-q01')?->input);
     }
 
     public function test_invalid_yaml_throws_a_content_exception_naming_the_file(): void
@@ -219,6 +239,27 @@ class ContentRepositoryTest extends TestCase
 
         $this->expectException(ContentException::class);
         $this->expectExceptionMessage('front matter');
+
+        $this->repository('python')->languages();
+    }
+
+    public function test_lesson_body_is_the_markdown_after_the_front_matter(): void
+    {
+        $this->writeLevel('python', 'level-01-basics', order: 1);
+        $this->write('python/level-01-basics/lessons/01-intro.md', $this->lesson('python-l1-intro', 'Pengenalan', order: 1, xp: 20));
+
+        $lesson = $this->repository('python')->languages()['python']->firstLevel()->lessons[0];
+
+        $this->assertSame('## Coba ini', $lesson->body);
+    }
+
+    public function test_lesson_without_content_is_rejected(): void
+    {
+        $this->writeLevel('python', 'level-01-basics', order: 1);
+        $this->write('python/level-01-basics/lessons/01-intro.md', "---\nid: python-l1-intro\ntitle: Pengenalan\norder: 1\nxp: 20\n---\n\n");
+
+        $this->expectException(ContentException::class);
+        $this->expectExceptionMessage('no content after the front matter');
 
         $this->repository('python')->languages();
     }

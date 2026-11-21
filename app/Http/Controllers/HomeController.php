@@ -18,21 +18,21 @@ class HomeController extends Controller
      */
     private const REASONS = [
         [
-            'icon' => 'code-slash',
+            'icon' => 'code',
             'tone' => 'primary',
             'problem' => 'Materinya terlalu teori, kurang praktik.',
             'title' => 'Praktik dulu, teori belakangan',
             'body' => 'Setiap pelajaran dimulai dari contoh kode dan hasilnya, lalu dijelaskan singkat. Setelah itu langsung latihan soal.',
         ],
         [
-            'icon' => 'lightning-charge-fill',
+            'icon' => 'zap',
             'tone' => 'xp',
             'problem' => 'Cepat bosan dan susah konsisten.',
             'title' => 'XP dan level di setiap langkah',
             'body' => 'Setiap pelajaran dan soal yang kamu selesaikan memberi XP. Kumpulkan XP dan buka level berikutnya.',
         ],
         [
-            'icon' => 'signpost-split-fill',
+            'icon' => 'road-sign',
             'tone' => 'success',
             'problem' => 'Bingung harus mulai dari mana.',
             'title' => 'Jalur belajar yang jelas',
@@ -41,11 +41,11 @@ class HomeController extends Controller
     ];
 
     private const STEPS = [
-        ['icon' => 'person-plus-fill', 'title' => 'Daftar', 'body' => 'Buat akun agar XP dan progresmu tersimpan.'],
-        ['icon' => 'code-square', 'title' => 'Pilih bahasa', 'body' => 'Mulai dengan Python, Java, atau C.'],
-        ['icon' => 'book-half', 'title' => 'Pelajari materi', 'body' => 'Pelajaran singkat dengan contoh kode.'],
-        ['icon' => 'patch-question-fill', 'title' => 'Jawab soal', 'body' => 'Langsung tahu benar atau salah, lengkap dengan penjelasannya.'],
-        ['icon' => 'trophy-fill', 'title' => 'Naik level', 'body' => 'Kumpulkan XP dan buka level berikutnya.'],
+        ['icon' => 'user-plus', 'title' => 'Daftar', 'body' => 'Buat akun agar XP dan progresmu tersimpan.'],
+        ['icon' => 'code', 'title' => 'Pilih bahasa', 'body' => 'Mulai dengan Python, Java, atau C.'],
+        ['icon' => 'book-open', 'title' => 'Pelajari materi', 'body' => 'Pelajaran singkat dengan contoh kode.'],
+        ['icon' => 'circle-question', 'title' => 'Jawab soal', 'body' => 'Langsung tahu benar atau salah, lengkap dengan penjelasannya.'],
+        ['icon' => 'trophy', 'title' => 'Naik level', 'body' => 'Kumpulkan XP dan buka level berikutnya.'],
     ];
 
     private const TYPE_DESCRIPTIONS = [
@@ -72,7 +72,7 @@ class HomeController extends Controller
         return view('home', [
             'demoQuestion' => $demoQuestion,
             'demoLanguage' => $demoQuestion ? $languages[$demoQuestion->language] : null,
-            'paths' => array_map(LearningPath::forLanguage(...), array_values($languages)),
+            'paths' => array_map(LearningPath::preview(...), array_values($languages)),
             'reasons' => self::REASONS,
             'steps' => self::STEPS,
             'questionTypes' => array_map(

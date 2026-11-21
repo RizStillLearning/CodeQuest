@@ -60,6 +60,7 @@ return [
     ],
 
     'attributes' => [
+        'answer' => 'jawaban',
         'name' => 'nama',
         'email' => 'email',
         'password' => 'kata sandi',

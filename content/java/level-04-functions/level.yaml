@@ -1,0 +1,6 @@
+id: java-l4
+title: Fungsi (Method)
+order: 4
+description: Kelompokkan kode ke dalam method, kirim data lewat parameter, dan kembalikan hasil dengan return.
+unlock:
+  min_score: 70  # sementara: % jawaban benar untuk membuka Level 5

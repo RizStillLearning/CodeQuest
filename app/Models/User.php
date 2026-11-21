@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -62,5 +63,21 @@ class User extends Authenticatable
     public function initial(): string
     {
         return mb_strtoupper(mb_substr(trim($this->name), 0, 1)) ?: '?';
+    }
+
+    /**
+     * @return HasMany<Completion, $this>
+     */
+    public function completions(): HasMany
+    {
+        return $this->hasMany(Completion::class);
+    }
+
+    /**
+     * @return HasMany<Answer, $this>
+     */
+    public function answers(): HasMany
+    {
+        return $this->hasMany(Answer::class);
     }
 }

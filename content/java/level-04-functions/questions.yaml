@@ -1,0 +1,195 @@
+- id: java-l4-q01
+  type: multiple_choice
+  prompt: Apa arti void pada static void greet()?
+  options:
+    - "Method ini tidak mengembalikan nilai"
+    - "Method ini tidak punya parameter"
+    - "Method ini isinya kosong"
+    - "Method ini tidak bisa dipanggil"
+  answer: "Method ini tidak mengembalikan nilai"
+  explanation: >-
+    void adalah return type yang berarti "tidak ada nilai yang dikembalikan". Tanda kurung
+    kosong () yang menunjukkan bahwa method ini tidak punya parameter.
+  xp: 5
+
+- id: java-l4-q02
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    static void greet() {
+        System.out.println("Halo");
+    }
+
+    public static void main(String[] args) {
+        System.out.println("A");
+        greet();
+        greet();
+        System.out.println("B");
+    }
+  answer: |-
+    A
+    Halo
+    Halo
+    B
+  explanation: >-
+    Program dimulai dari main. Java menampilkan A, lalu menjalankan isi greet() dua kali,
+    lalu menampilkan B.
+  xp: 10
+
+- id: java-l4-q03
+  type: fill_in
+  prompt: Lengkapi return type agar method mengembalikan hasil perkalian dua bilangan bulat.
+  code: |
+    static ____ multiply(int a, int b) {
+        return a * b;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(multiply(3, 4));
+    }
+  answer: "int"
+  explanation: >-
+    a * b dengan dua int menghasilkan int, jadi return type-nya int. Dengan void, method
+    tidak boleh mengembalikan nilai.
+  xp: 10
+
+- id: java-l4-q04
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    static int addXp(int xp, int bonus) {
+        return xp + bonus;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(addXp(30, 5) + addXp(10, 5));
+    }
+  answer: "50"
+  explanation: >-
+    addXp(30, 5) mengembalikan 35 dan addXp(10, 5) mengembalikan 15. Hasil dari method bisa
+    langsung dipakai untuk menghitung, jadi 35 + 15 = 50.
+  xp: 10
+
+- id: java-l4-q05
+  type: multiple_choice
+  prompt: Apa yang terjadi jika kode ini di-compile?
+  code: |
+    for (int i = 0; i < 3; i++) {
+        System.out.println(i);
+    }
+    System.out.println(i);
+  options:
+    - "Error, karena i hanya ada di dalam perulangan for"
+    - "Menampilkan 0, 1, 2, lalu 3"
+    - "Menampilkan 0, 1, 2, lalu 2"
+    - "Menampilkan 0, 1, 2, lalu 0"
+  answer: "Error, karena i hanya ada di dalam perulangan for"
+  explanation: >-
+    i dibuat di dalam for, jadi hanya ada di dalam perulangan itu. Baris terakhir memakai i
+    di luar perulangan, sehingga Java menolak meng-compile kode ini.
+  xp: 5
+
+- id: java-l4-q06
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    static String getGrade(int score) {
+        if (score >= 80) {
+            return "A";
+        }
+        return "B";
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getGrade(90));
+        System.out.println(getGrade(50));
+    }
+  answer: |-
+    A
+    B
+  explanation: >-
+    return langsung menghentikan method. Untuk 90, method berhenti di return "A". Untuk 50,
+    kondisi if salah, jadi method lanjut ke return "B".
+  xp: 10
+
+- id: java-l4-q07
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    static void addBonus(int xp) {
+        xp = xp + 10;
+    }
+
+    public static void main(String[] args) {
+        int myXp = 50;
+        addBonus(myXp);
+        System.out.println(myXp);
+    }
+  answer: "50"
+  explanation: >-
+    Parameter xp hanya menerima salinan nilai 50. Mengubah xp di dalam addBonus tidak
+    mengubah myXp, jadi yang ditampilkan tetap 50.
+  xp: 10
+
+- id: java-l4-q08
+  type: multiple_choice
+  prompt: Mana penulisan method yang benar untuk menerima dua int dan mengembalikan jumlahnya?
+  options:
+    - "static int add(int a, int b) { return a + b; }"
+    - "static void add(int a, int b) { return a + b; }"
+    - "static int add(a, b) { return a + b; }"
+    - "static int add(int a, int b) { a + b; }"
+  answer: "static int add(int a, int b) { return a + b; }"
+  explanation: >-
+    Method yang mengembalikan int harus punya return type int, setiap parameter harus ditulis
+    dengan tipenya, dan hasilnya harus dikembalikan dengan return. Ketiga opsi lainnya
+    menyebabkan error saat compile.
+  xp: 5
+
+- id: java-l4-q09
+  type: fill_in
+  prompt: Lengkapi kode agar main memanggil method showScore dengan nilai 90.
+  code: |
+    static void showScore(int score) {
+        System.out.println("Skor: " + score);
+    }
+
+    public static void main(String[] args) {
+        ____(90);
+    }
+  answer: "showScore"
+  explanation: >-
+    Method dipanggil dengan menulis namanya, lalu argumen di dalam tanda kurung. Kode ini
+    menampilkan Skor: 90.
+  xp: 10
+
+- id: java-l4-q10
+  type: case_study
+  scenario: |-
+    Siti menulis method untuk menentukan nilai huruf. Menurutnya, ketiga kondisi sudah
+    mencakup semua skor. Tetapi programnya tidak bisa di-compile, dan muncul error
+    missing return statement.
+  code: |
+    static String getGrade(int score) {
+        if (score >= 80) {
+            return "A";
+        } else if (score >= 60) {
+            return "B";
+        } else if (score < 60) {
+            return "C";
+        }
+    }
+  prompt: Bagaimana cara memperbaikinya?
+  options:
+    - "Ganti else if (score < 60) menjadi else"
+    - "Ganti return type String menjadi void"
+    - "Tambahkan else if (score >= 0) di bagian akhir"
+    - "Hapus semua kata return"
+  answer: "Ganti else if (score < 60) menjadi else"
+  explanation: >-
+    Java tidak memeriksa apakah ketiga kondisi sudah mencakup semua angka. Java hanya melihat
+    bahwa jika ketiganya salah, tidak ada nilai yang dikembalikan. Dengan else, setiap jalur
+    pasti berakhir dengan return. Menambah else if lagi tetap menyisakan jalur tanpa return.
+    Dengan void, return "A" menjadi error karena method void tidak boleh mengembalikan nilai,
+    dan tanpa kata return, baris seperti "A"; bukan perintah yang valid.
+  xp: 15

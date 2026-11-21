@@ -8,7 +8,7 @@ Lessons and practice questions for CodeQuest, stored as text files.
 ```
 content/
 └── <language>/                          python, java, c
-    └── level-01-basic-programming/
+    └── level-01-basic-programming/      level-02-basic-syntax/, ... (same layout)
         ├── level.yaml                   level settings
         ├── lessons/                     one Markdown file per lesson, in order
         │   ├── 01-introduction.md
@@ -49,11 +49,15 @@ Every question has `id`, `type`, `prompt`, `answer`, `explanation`, and `xp`.
 |---|---|---|
 | `predict_output` | `code` | the exact output the code prints |
 | `fill_in` | `code` with a `____` blank | the text that goes in the blank (`also_accept` lists other correct answers) |
-| `multiple_choice` | `options` | one of the options, written exactly the same |
+| `multiple_choice` | `options`, optional `code` | one of the options, written exactly the same |
 | `case_study` | `scenario`, `options`, optional `code` | one of the options, written exactly the same |
 
+- `predict_output` questions whose code reads keyboard input have an `input` field: what
+  the user types, shown to the learner (for example "Jika pengguna mengetik 7, ...").
 - In Java and C questions, `code` shows only the lines inside `main()`, unless the
-  question is about the program's structure.
+  question is about the program's structure. Java code assumes `import java.util.Scanner;`.
+- From Level 4, code that defines functions shows the functions and `main()` together:
+  in Java without the `public class Main { }` around them, and in C without the `#include` lines.
 - Answers are compared after trimming whitespace at the start and end.
 - `explanation` is shown after the user answers, whether they were right or wrong.
 

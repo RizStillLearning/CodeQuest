@@ -4,12 +4,15 @@ namespace Tests\Feature;
 
 use App\Content\ContentException;
 use App\Content\ContentRepository;
+use App\Content\Language;
 use App\Models\User;
-use App\ViewModels\LearningPath;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class LearnPageTest extends TestCase
 {
+    use RefreshDatabase;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -22,35 +25,57 @@ class LearnPageTest extends TestCase
         $this->get('/belajar')->assertRedirect(route('login'));
     }
 
-    public function test_learn_page_shows_language_tabs_and_paths_directly(): void
+    public function test_learn_page_shows_a_card_per_language_without_the_paths(): void
     {
-        $response = $this->actingAs(User::factory()->make(['name' => 'Siti Aminah']))->get('/belajar');
+        $response = $this->actingAs(User::factory()->create(['name' => 'Siti Aminah']))->get('/belajar');
 
         $response->assertOk()
             ->assertViewIs('learn')
-            ->assertViewHas('paths', fn (array $paths) => array_map(fn (LearningPath $path) => $path->language->key, $paths) === ['python', 'java', 'c'])
+            ->assertViewHas('languages', fn (array $languages) => array_map(fn (Language $language) => $language->key, $languages) === ['python', 'java', 'c'])
             ->assertSee('Halo, Siti!')
             ->assertSee('Pilih bahasamu, ikuti jalurnya')
-            ->assertSeeInOrder(['id="cq-tab-python"', 'id="cq-tab-java"', 'id="cq-tab-c"'], false)
-            ->assertSee('Level 1: Dasar Pemrograman')
-            ->assertSee('Pengenalan Pemrograman')
+            ->assertSeeInOrder(['Mulai belajar Python', 'Mulai belajar Java', 'Mulai belajar C'])
+            ->assertSee('Dasar Pemrograman')
+            ->assertDontSee('cq-path-step', false)
             // Landing-page sections are not repeated here.
             ->assertDontSee('bukan hafalan')
             ->assertDontSee('Lima langkah dari nol')
             ->assertDontSee('Coba sekarang, tanpa daftar');
     }
 
-    public function test_start_button_says_lessons_are_coming_until_lesson_pages_exist(): void
+    public function test_each_card_shows_the_level_the_learner_is_on(): void
     {
-        $this->actingAs(User::factory()->make())
-            ->get('/belajar')
-            ->assertSee('Halaman pelajaran sedang kami siapkan.')
-            ->assertDontSee(route('register'));
+        $this->actingAs(User::factory()->create());
+        $this->readLessons('python', 1);
+        $this->answerQuestions('python', 1);
+
+        $this->get('/belajar')
+            ->assertSeeInOrder(['Python', 'Level 2', 'Sintaks Dasar', 'Java', 'Level 1', 'Dasar Pemrograman', 'C', 'Level 1', 'Dasar Pemrograman']);
+    }
+
+    public function test_cards_invite_to_continue_once_the_learner_has_started(): void
+    {
+        $this->actingAs(User::factory()->create());
+        $this->get('/belajar/java/1/pelajaran/1');
+
+        $this->get('/belajar')
+            ->assertSeeInOrder(['Mulai belajar Python', 'Lanjutkan belajar Java', 'Mulai belajar C']);
+    }
+
+    public function test_start_buttons_open_each_language_path_page(): void
+    {
+        $response = $this->actingAs(User::factory()->create())->get('/belajar');
+
+        foreach (['python', 'java', 'c'] as $language) {
+            $response->assertSee('href="'.url("/belajar/{$language}").'" class="btn btn-primary w-100 mt-auto cq-lang-start"', false);
+        }
+
+        $response->assertDontSee(route('register'));
     }
 
     public function test_navbar_marks_learn_as_the_current_page(): void
     {
-        $html = $this->actingAs(User::factory()->make())->get('/belajar')->getContent();
+        $html = $this->actingAs(User::factory()->create())->get('/belajar')->getContent();
 
         $this->assertMatchesRegularExpression('#href="'.preg_quote(route('learn'), '#').'"\s+aria-current="page"#', $html);
         $this->assertSame(1, substr_count($html, 'aria-current="page"'));
@@ -62,7 +87,7 @@ class LearnPageTest extends TestCase
             $mock->shouldReceive('languages')->andThrow(ContentException::invalid('content/python/level.yaml', 'broken'));
         });
 
-        $this->actingAs(User::factory()->make())
+        $this->actingAs(User::factory()->create())
             ->get('/belajar')
             ->assertOk()
             ->assertSee('Daftar bahasa belum bisa dimuat.')

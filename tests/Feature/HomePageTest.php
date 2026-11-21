@@ -24,9 +24,9 @@ class HomePageTest extends TestCase
         $response->assertOk();
         $response->assertSee('Belajar coding lewat');
         $response->assertSeeInOrder(['id="cq-tab-python"', 'id="cq-tab-java"', 'id="cq-tab-c"'], false);
-        $response->assertSee('Level 1: Dasar Pemrograman');
-        $response->assertSee('Pengenalan Pemrograman');
-        $response->assertSee('10 soal latihan');
+        // The preview is Level 1's path, ending with Level 2 as a teaser.
+        $response->assertSeeInOrder(['Level 1', 'Dasar Pemrograman', 'Pengenalan Pemrograman', '10 soal latihan', 'Level 2', 'Sintaks Dasar']);
+        $response->assertSee(count(app(ContentRepository::class)->languages()['python']->levels).' level tersedia');
     }
 
     public function test_homepage_shows_the_configured_demo_question(): void
@@ -49,7 +49,7 @@ class HomePageTest extends TestCase
 
         $response->assertOk();
         $response->assertDontSee('data-try-question', false);
-        $response->assertSee('Level 1: Dasar Pemrograman');
+        $response->assertSee('Pengenalan Pemrograman');
     }
 
     public function test_homepage_shows_a_friendly_message_when_content_cannot_be_loaded(): void

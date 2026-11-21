@@ -1,0 +1,158 @@
+- id: c-l2-q01
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    printf("%d\n", 17 % 5);
+    printf("%d\n", 17 / 5);
+  answer: |-
+    2
+    3
+  explanation: >-
+    17 dibagi 5 adalah 3 sisa 2. % memberi sisanya, jadi 17 % 5 = 2. 17 / 5 dengan dua int
+    membuang desimalnya, jadi hasilnya 3.
+  xp: 10
+
+- id: c-l2-q02
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    printf("%d\n", 5 > 3);
+    printf("%d\n", 5 == 3);
+  answer: |-
+    1
+    0
+  explanation: >-
+    Di C, perbandingan menghasilkan angka. 5 > 3 benar, jadi hasilnya 1. 5 == 3 salah,
+    jadi hasilnya 0.
+  xp: 10
+
+- id: c-l2-q03
+  type: multiple_choice
+  prompt: Apa arti xp++; di C?
+  options:
+    - "Menambah xp sebanyak 1"
+    - "Menambah xp sebanyak 2"
+    - "Mengalikan xp dengan 2"
+    - "Menampilkan nilai xp"
+  answer: "Menambah xp sebanyak 1"
+  explanation: >-
+    xp++; adalah cara singkat menulis xp = xp + 1;. Kebalikannya, xp--; mengurangi xp sebanyak 1.
+  xp: 5
+
+- id: c-l2-q04
+  type: fill_in
+  prompt: Lengkapi kode agar menampilkan Bonus! jika streak lebih dari 7 atau xp minimal 100.
+  code: |
+    int streak = 3;
+    int xp = 120;
+    if (streak > 7 ____ xp >= 100) {
+        printf("Bonus!\n");
+    }
+  answer: "||"
+  explanation: >-
+    || berarti "atau": cukup salah satu kondisi yang benar. streak > 7 salah, tetapi
+    xp >= 100 benar, jadi Bonus! ditampilkan.
+  xp: 10
+
+- id: c-l2-q05
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    int score = 65;
+    if (score >= 80) {
+        printf("A\n");
+    } else if (score >= 60) {
+        printf("B\n");
+    } else {
+        printf("C\n");
+    }
+  answer: "B"
+  explanation: >-
+    score >= 80 salah, jadi C lanjut ke else if. score >= 60 benar, jadi B ditampilkan
+    dan bagian else dilewati.
+  xp: 10
+
+- id: c-l2-q06
+  type: multiple_choice
+  prompt: Berapa kali printf di dalam perulangan ini dijalankan?
+  code: |
+    for (int i = 0; i < 4; i++) {
+        printf("Hai\n");
+    }
+  options:
+    - "3 kali"
+    - "4 kali"
+    - "5 kali"
+    - "Tidak pernah"
+  answer: "4 kali"
+  explanation: >-
+    i bernilai 0, 1, 2, dan 3. Saat i menjadi 4, kondisi i < 4 salah dan perulangan
+    berhenti, jadi totalnya 4 kali.
+  xp: 5
+
+- id: c-l2-q07
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    int total = 0;
+    for (int i = 1; i <= 4; i++) {
+        total += i;
+    }
+    printf("%d\n", total);
+  answer: "10"
+  explanation: >-
+    Setiap putaran menambahkan nilai i ke total: 1 + 2 + 3 + 4 = 10.
+  xp: 10
+
+- id: c-l2-q08
+  type: multiple_choice
+  prompt: Jika xp bernilai 50, kondisi mana yang benar?
+  options:
+    - "xp > 40 && xp < 60"
+    - "xp > 60 || xp < 40"
+    - "!(xp == 50)"
+    - "xp == 40"
+  answer: "xp > 40 && xp < 60"
+  explanation: >-
+    50 lebih besar dari 40 dan lebih kecil dari 60, jadi kedua kondisi benar dan && bernilai
+    benar. Pada opsi kedua, kedua kondisinya salah. Pada opsi ketiga, xp == 50 benar, lalu
+    ! membaliknya menjadi salah.
+  xp: 5
+
+- id: c-l2-q09
+  type: fill_in
+  prompt: Lengkapi kode agar terus menampilkan sisa nyawa selama lives masih lebih dari 0.
+  code: |
+    int lives = 3;
+    ____ (lives > 0) {
+        printf("Nyawa: %d\n", lives);
+        lives--;
+    }
+  answer: "while"
+  explanation: >-
+    while mengulang selama kondisinya benar. lives berkurang 1 setiap putaran, jadi kode
+    menampilkan Nyawa: 3, Nyawa: 2, dan Nyawa: 1, lalu berhenti saat lives menjadi 0.
+  xp: 10
+
+- id: c-l2-q10
+  type: case_study
+  scenario: |-
+    Rina ingin menampilkan Sempurna! hanya jika skor kuisnya tepat 100.
+    Skornya hanya 50, tetapi programnya tetap menampilkan Sempurna!
+  code: |
+    int score = 50;
+    if (score = 100) {
+        printf("Sempurna!\n");
+    }
+  prompt: Apa penyebabnya?
+  options:
+    - "= menyimpan 100 ke score, jadi kondisinya selalu benar. Seharusnya memakai =="
+    - "printf tidak boleh dipakai di dalam if"
+    - "Kondisi if seharusnya ditulis di dalam kurung kurawal { }"
+    - "Angka 100 terlalu besar untuk disimpan di int"
+  answer: "= menyimpan 100 ke score, jadi kondisinya selalu benar. Seharusnya memakai =="
+  explanation: >-
+    score = 100 tidak membandingkan, tetapi menyimpan 100 ke score. Di C, angka selain 0
+    dianggap benar, jadi isi if selalu dijalankan. Dengan if (score == 100), kode ini tidak
+    menampilkan apa-apa karena 50 tidak sama dengan 100.
+  xp: 15

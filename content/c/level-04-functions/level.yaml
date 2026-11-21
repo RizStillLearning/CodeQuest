@@ -1,0 +1,6 @@
+id: c-l4
+title: Fungsi
+order: 4
+description: Kelompokkan kode ke dalam fungsi, kirim data lewat parameter, dan kembalikan hasil dengan return.
+unlock:
+  min_score: 70  # sementara: % jawaban benar untuk membuka Level 5

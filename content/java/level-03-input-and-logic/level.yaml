@@ -1,0 +1,6 @@
+id: java-l3
+title: Input & Logika Lanjutan
+order: 3
+description: Baca input dari pengguna, gabungkan kondisi dan perulangan, dan kendalikan perulangan dengan break dan continue.
+unlock:
+  min_score: 70  # sementara: % jawaban benar untuk membuka Level 4

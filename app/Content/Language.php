@@ -22,6 +22,17 @@ final readonly class Language
         return $this->levels[0];
     }
 
+    public function level(int $order): ?Level
+    {
+        foreach ($this->levels as $level) {
+            if ($level->order === $order) {
+                return $level;
+            }
+        }
+
+        return null;
+    }
+
     public function levelAfter(Level $level): ?Level
     {
         foreach ($this->levels as $candidate) {

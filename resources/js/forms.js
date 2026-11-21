@@ -6,7 +6,7 @@
 export function initPasswordReveal() {
     document.querySelectorAll('[data-reveal]').forEach((button) => {
         const input = document.getElementById(button.dataset.reveal);
-        const icon = button.querySelector('.bi');
+        const icon = button.querySelector('[class^="pixelart-icons-font-"]');
 
         button.hidden = false;
         button.addEventListener('click', () => {
@@ -14,7 +14,7 @@ export function initPasswordReveal() {
             input.type = show ? 'text' : 'password';
             button.setAttribute('aria-pressed', String(show));
             button.setAttribute('aria-label', show ? button.dataset.labelHide : button.dataset.labelShow);
-            icon.classList.replace(show ? 'bi-eye' : 'bi-eye-slash', show ? 'bi-eye-slash' : 'bi-eye');
+            icon.classList.replace(show ? 'pixelart-icons-font-eye' : 'pixelart-icons-font-eye-off', show ? 'pixelart-icons-font-eye-off' : 'pixelart-icons-font-eye');
         });
     });
 }

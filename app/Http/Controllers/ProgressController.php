@@ -13,7 +13,7 @@ class ProgressController extends Controller
     {
         return view('coming-soon', [
             'title' => 'Progres belajar',
-            'icon' => 'graph-up-arrow',
+            'icon' => 'trending-up',
             'description' => 'Di sini kamu akan bisa melihat level yang sudah selesai, XP yang terkumpul, dan soal yang perlu diulang.',
         ]);
     }

@@ -1,0 +1,160 @@
+- id: python-l3-q01
+  type: multiple_choice
+  prompt: Apa tipe data dari hasil input()?
+  options:
+    - "str"
+    - "int"
+    - "float"
+    - "Tergantung apa yang diketik pengguna"
+  answer: "str"
+  explanation: >-
+    input() selalu menghasilkan teks (str), walaupun pengguna mengetik angka seperti 20.
+    Ubah dengan int() atau float() jika ingin berhitung.
+  xp: 5
+
+- id: python-l3-q02
+  type: predict_output
+  prompt: Jika pengguna mengetik 7, apa output dari kode ini?
+  input: "7"
+  code: |
+    number = int(input())
+    print(number * 2)
+  answer: "14"
+  explanation: >-
+    int() mengubah teks "7" menjadi angka 7, jadi number * 2 = 14.
+  xp: 10
+
+- id: python-l3-q03
+  type: fill_in
+  prompt: Lengkapi kode agar angka yang diketik pengguna bisa dijumlahkan dengan 10.
+  code: |
+    a = ____(input())
+    print(a + 10)
+  answer: "int"
+  also_accept: ["float"]
+  explanation: >-
+    Hasil input() adalah teks, dan teks tidak bisa dijumlahkan dengan angka. int() mengubahnya
+    menjadi bilangan bulat. float() juga benar jika angkanya boleh desimal.
+  xp: 10
+
+- id: python-l3-q04
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    score = 65
+    finished = True
+    if finished:
+        if score >= 80:
+            print("A")
+        else:
+            print("B")
+    else:
+        print("Belum selesai")
+  answer: "B"
+  explanation: >-
+    finished bernilai True, jadi if bagian dalam diperiksa. score >= 80 bernilai False,
+    jadi else bagian dalam dijalankan dan B ditampilkan.
+  xp: 10
+
+- id: python-l3-q05
+  type: multiple_choice
+  prompt: Berapa kali print di dalam perulangan ini dijalankan?
+  code: |
+    for i in range(2):
+        for j in range(3):
+            print("*")
+  options:
+    - "2 kali"
+    - "3 kali"
+    - "5 kali"
+    - "6 kali"
+  answer: "6 kali"
+  explanation: >-
+    Perulangan luar berjalan 2 kali. Di setiap putarannya, perulangan dalam berjalan 3 kali.
+    Jadi totalnya 2 × 3 = 6 kali.
+  xp: 5
+
+- id: python-l3-q06
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    for i in range(1, 10):
+        if i == 3:
+            break
+        print(i)
+  answer: |-
+    1
+    2
+  explanation: >-
+    Saat i menjadi 3, break menghentikan perulangan sebelum print dijalankan.
+    Jadi yang ditampilkan hanya 1 dan 2.
+  xp: 10
+
+- id: python-l3-q07
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    for i in range(1, 6):
+        if i % 2 == 0:
+            continue
+        print(i)
+  answer: |-
+    1
+    3
+    5
+  explanation: >-
+    Saat i genap (2 dan 4), continue melompati print dan lanjut ke putaran berikutnya.
+    Jadi yang ditampilkan hanya angka ganjil: 1, 3, dan 5.
+  xp: 10
+
+- id: python-l3-q08
+  type: multiple_choice
+  prompt: Apa perbedaan break dan continue?
+  options:
+    - "break menghentikan perulangan, continue melompati sisa putaran ini"
+    - "break melompati sisa putaran ini, continue menghentikan perulangan"
+    - "Keduanya menghentikan seluruh program"
+    - "Keduanya hanya bisa dipakai di dalam while"
+  answer: "break menghentikan perulangan, continue melompati sisa putaran ini"
+  explanation: >-
+    break keluar dari perulangan sepenuhnya. continue hanya melewati sisa putaran saat ini,
+    lalu perulangan lanjut ke putaran berikutnya. Keduanya bisa dipakai di for dan while.
+  xp: 5
+
+- id: python-l3-q09
+  type: fill_in
+  prompt: Lengkapi kode agar pertanyaan berhenti diulang setelah jawabannya benar.
+  code: |
+    while True:
+        answer = input("Berapa 3 x 3? ")
+        if answer == "9":
+            print("Benar!")
+            ____
+  answer: "break"
+  explanation: >-
+    while True berulang terus. break menghentikan perulangan setelah jawabannya benar.
+  xp: 10
+
+- id: python-l3-q10
+  type: case_study
+  scenario: |-
+    Dewi membuat kuis penjumlahan. Saat pengguna mengetik 10, program seharusnya
+    menampilkan Benar!, tetapi malah menampilkan Salah.
+  code: |
+    answer = input("Berapa 5 + 5? ")
+    if answer == 10:
+        print("Benar!")
+    else:
+        print("Salah")
+  prompt: Apa penyebabnya?
+  options:
+    - 'input() menghasilkan teks "10", sedangkan yang dibandingkan adalah angka 10'
+    - "Seharusnya memakai = bukan =="
+    - "input() tidak bisa membaca angka"
+    - "else seharusnya ditulis sebelum if"
+  answer: 'input() menghasilkan teks "10", sedangkan yang dibandingkan adalah angka 10'
+  explanation: >-
+    Teks "10" tidak sama dengan angka 10, jadi kondisinya False. Perbaiki dengan mengubah
+    jawabannya menjadi angka, if int(answer) == 10:, atau membandingkannya dengan teks,
+    if answer == "10":. Memakai = di dalam if justru menyebabkan error.
+  xp: 15
