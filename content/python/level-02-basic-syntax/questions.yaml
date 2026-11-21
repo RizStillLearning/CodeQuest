@@ -1,0 +1,151 @@
+- id: python-l2-q01
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    print(7 // 2)
+    print(7 % 2)
+  answer: |-
+    3
+    1
+  explanation: >-
+    // membagi lalu membulatkan ke bawah, jadi 7 // 2 = 3. % memberi sisa bagi:
+    7 dibagi 2 adalah 3 sisa 1, jadi 7 % 2 = 1.
+  xp: 10
+
+- id: python-l2-q02
+  type: multiple_choice
+  prompt: Apa hasil dari 2 + 3 * 4?
+  options:
+    - "20"
+    - "14"
+    - "24"
+    - "9"
+  answer: "14"
+  explanation: >-
+    Perkalian dihitung lebih dulu daripada penjumlahan. 3 * 4 = 12, lalu 2 + 12 = 14.
+    Untuk mendapat 20, tulis (2 + 3) * 4.
+  xp: 5
+
+- id: python-l2-q03
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    score = 85
+    finished = False
+    print(score >= 70 and finished)
+  answer: "False"
+  explanation: >-
+    score >= 70 bernilai True, tetapi finished bernilai False. and butuh kedua kondisi
+    True, jadi hasilnya False.
+  xp: 10
+
+- id: python-l2-q04
+  type: fill_in
+  prompt: Lengkapi kode agar menampilkan Genap jika number habis dibagi 2.
+  code: |
+    number = 8
+    if number ____ 2 == 0:
+        print("Genap")
+  answer: "%"
+  explanation: >-
+    % memberi sisa bagi. Jika number % 2 hasilnya 0, number habis dibagi 2, jadi genap.
+  xp: 10
+
+- id: python-l2-q05
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    xp = 150
+    if xp >= 200:
+        print("Level 3")
+    elif xp >= 100:
+        print("Level 2")
+    else:
+        print("Level 1")
+  answer: "Level 2"
+  explanation: >-
+    xp >= 200 bernilai False, jadi Python lanjut ke elif. xp >= 100 bernilai True,
+    jadi Level 2 ditampilkan dan bagian else dilewati.
+  xp: 10
+
+- id: python-l2-q06
+  type: multiple_choice
+  prompt: Apa perbedaan = dan == di Python?
+  options:
+    - "= menyimpan nilai, == membandingkan dua nilai"
+    - "Keduanya sama saja"
+    - "= membandingkan dua nilai, == menyimpan nilai"
+    - "== hanya bisa dipakai untuk teks"
+  answer: "= menyimpan nilai, == membandingkan dua nilai"
+  explanation: >-
+    xp = 10 menyimpan 10 ke dalam xp. xp == 10 memeriksa apakah xp sama dengan 10,
+    dan hasilnya True atau False.
+  xp: 5
+
+- id: python-l2-q07
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    for i in range(3):
+        print(i)
+  answer: |-
+    0
+    1
+    2
+  explanation: >-
+    range(3) dimulai dari 0 dan berhenti sebelum 3, jadi menghasilkan 0, 1, dan 2.
+  xp: 10
+
+- id: python-l2-q08
+  type: multiple_choice
+  prompt: Angka berapa saja yang dihasilkan range(1, 5)?
+  options:
+    - "1, 2, 3, 4"
+    - "1, 2, 3, 4, 5"
+    - "0, 1, 2, 3, 4"
+    - "2, 3, 4, 5"
+  answer: "1, 2, 3, 4"
+  explanation: >-
+    range(1, 5) dimulai dari 1 dan berhenti sebelum 5. Angka terakhir tidak ikut.
+  xp: 5
+
+- id: python-l2-q09
+  type: fill_in
+  prompt: Lengkapi kode agar xp terus bertambah 10 selama nilainya masih di bawah 50.
+  code: |
+    xp = 0
+    ____ xp < 50:
+        xp += 10
+    print(xp)
+  answer: "while"
+  explanation: >-
+    while mengulang selama kondisinya True. Setelah xp menjadi 50, xp < 50 bernilai
+    False dan perulangan berhenti, jadi kode menampilkan 50.
+  xp: 10
+
+- id: python-l2-q10
+  type: case_study
+  scenario: |-
+    Budi membuat fitur lencana. Pengguna dengan XP 250 seharusnya mendapat lencana Emas,
+    tetapi kode ini malah menampilkan Perak.
+  code: |
+    xp = 250
+    if xp >= 100:
+        print("Perak")
+    elif xp >= 200:
+        print("Emas")
+    else:
+        print("Perunggu")
+  prompt: Bagaimana cara memperbaikinya?
+  options:
+    - "Periksa xp >= 200 lebih dulu, baru xp >= 100"
+    - "Ganti elif menjadi if"
+    - "Ganti semua >= menjadi =="
+    - "Hapus bagian else"
+  answer: "Periksa xp >= 200 lebih dulu, baru xp >= 100"
+  explanation: >-
+    Python berhenti di kondisi pertama yang True. 250 >= 100 sudah True, jadi Perak
+    ditampilkan dan elif tidak pernah diperiksa. Periksa kondisi yang paling ketat lebih dulu.
+    Mengganti elif menjadi if akan menampilkan Perak dan Emas sekaligus, mengganti >= menjadi ==
+    akan menampilkan Perunggu, dan menghapus else tidak mengubah apa-apa.
+  xp: 15

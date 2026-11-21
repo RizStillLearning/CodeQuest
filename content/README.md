@@ -8,7 +8,7 @@ Lessons and practice questions for CodeQuest, stored as text files.
 ```
 content/
 └── <language>/                          python, java, c
-    └── level-01-basic-programming/
+    └── level-01-basic-programming/      level-02-basic-syntax/, ... (same layout)
         ├── level.yaml                   level settings
         ├── lessons/                     one Markdown file per lesson, in order
         │   ├── 01-introduction.md
@@ -49,7 +49,7 @@ Every question has `id`, `type`, `prompt`, `answer`, `explanation`, and `xp`.
 |---|---|---|
 | `predict_output` | `code` | the exact output the code prints |
 | `fill_in` | `code` with a `____` blank | the text that goes in the blank (`also_accept` lists other correct answers) |
-| `multiple_choice` | `options` | one of the options, written exactly the same |
+| `multiple_choice` | `options`, optional `code` | one of the options, written exactly the same |
 | `case_study` | `scenario`, `options`, optional `code` | one of the options, written exactly the same |
 
 - In Java and C questions, `code` shows only the lines inside `main()`, unless the

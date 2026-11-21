@@ -1,0 +1,157 @@
+- id: java-l2-q01
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    System.out.println(10 / 3);
+    System.out.println(10 % 3);
+  answer: |-
+    3
+    1
+  explanation: >-
+    10 dan 3 sama-sama int, jadi 10 / 3 membuang desimalnya dan menghasilkan 3.
+    % memberi sisa bagi: 10 dibagi 3 adalah 3 sisa 1, jadi 10 % 3 = 1.
+  xp: 10
+
+- id: java-l2-q02
+  type: multiple_choice
+  prompt: Apa arti xp += 5; di Java?
+  options:
+    - "xp = xp + 5;"
+    - "xp = 5;"
+    - "xp = xp * 5;"
+    - "xp == xp + 5;"
+  answer: "xp = xp + 5;"
+  explanation: >-
+    += adalah cara singkat untuk menambah nilai variabel. xp += 5; sama dengan xp = xp + 5;.
+  xp: 5
+
+- id: java-l2-q03
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    int score = 85;
+    boolean finished = false;
+    System.out.println(score >= 70 && finished);
+  answer: "false"
+  explanation: >-
+    score >= 70 bernilai true, tetapi finished bernilai false. && butuh kedua kondisi
+    true, jadi hasilnya false.
+  xp: 10
+
+- id: java-l2-q04
+  type: fill_in
+  prompt: Lengkapi kode agar menampilkan Lulus! hanya jika score minimal 70 dan kuisnya sudah selesai.
+  code: |
+    int score = 80;
+    boolean finished = true;
+    if (score >= 70 ____ finished) {
+        System.out.println("Lulus!");
+    }
+  answer: "&&"
+  explanation: >-
+    && berarti "dan": kedua kondisi harus true. Di sini score >= 70 dan finished
+    sama-sama true, jadi Lulus! ditampilkan.
+  xp: 10
+
+- id: java-l2-q05
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    int xp = 200;
+    if (xp >= 200) {
+        System.out.println("Level 3");
+    } else if (xp >= 100) {
+        System.out.println("Level 2");
+    } else {
+        System.out.println("Level 1");
+    }
+  answer: "Level 3"
+  explanation: >-
+    >= berarti lebih besar atau sama dengan. 200 >= 200 bernilai true, jadi Level 3
+    ditampilkan dan bagian lainnya dilewati.
+  xp: 10
+
+- id: java-l2-q06
+  type: multiple_choice
+  prompt: Bagaimana cara yang benar untuk memeriksa apakah isi String name adalah Budi?
+  options:
+    - 'name.equals("Budi")'
+    - 'name == "Budi"'
+    - 'name = "Budi"'
+    - 'name.equals(Budi)'
+  answer: 'name.equals("Budi")'
+  explanation: >-
+    .equals() membandingkan isi String. == hanya memeriksa apakah keduanya objek yang sama,
+    jadi hasilnya bisa salah. = menyimpan nilai, dan Budi tanpa tanda kutip dianggap nama variabel.
+  xp: 5
+
+- id: java-l2-q07
+  type: predict_output
+  prompt: Apa output dari kode ini?
+  code: |
+    for (int i = 0; i < 3; i++) {
+        System.out.println(i);
+    }
+  answer: |-
+    0
+    1
+    2
+  explanation: >-
+    i dimulai dari 0 dan bertambah 1 setiap putaran. Saat i menjadi 3, kondisi i < 3
+    bernilai false dan perulangan berhenti, jadi yang ditampilkan 0, 1, dan 2.
+  xp: 10
+
+- id: java-l2-q08
+  type: multiple_choice
+  prompt: Berapa kali perulangan ini dijalankan?
+  code: |
+    for (int i = 1; i <= 5; i++) {
+        System.out.println("Hai");
+    }
+  options:
+    - "4 kali"
+    - "5 kali"
+    - "6 kali"
+    - "Tidak pernah"
+  answer: "5 kali"
+  explanation: >-
+    i bernilai 1, 2, 3, 4, dan 5. Karena kondisinya i <= 5, angka 5 ikut dijalankan,
+    jadi totalnya 5 kali.
+  xp: 5
+
+- id: java-l2-q09
+  type: fill_in
+  prompt: Lengkapi kode agar menampilkan angka 1 sampai 5.
+  code: |
+    for (int i = 1; i ____ 5; i++) {
+        System.out.println(i);
+    }
+  answer: "<="
+  explanation: >-
+    <= berarti lebih kecil atau sama dengan, jadi angka 5 ikut ditampilkan.
+    Dengan <, perulangan berhenti di 4.
+  xp: 10
+
+- id: java-l2-q10
+  type: case_study
+  scenario: |-
+    Siti membuat hitung mundur sebelum kuis dimulai. Programnya seharusnya menampilkan
+    3, 2, 1, tetapi malah terus menampilkan 3 dan tidak pernah berhenti.
+  code: |
+    int count = 3;
+    while (count > 0) {
+        System.out.println(count);
+    }
+  prompt: Baris apa yang perlu ditambahkan di dalam perulangan, setelah println?
+  options:
+    - "count--;"
+    - "count++;"
+    - "count = 3;"
+    - "break;"
+  answer: "count--;"
+  explanation: >-
+    count tidak pernah berubah, jadi count > 0 selalu true. count--; mengurangi count
+    sebanyak 1 setiap putaran: 3, 2, 1, lalu 0 membuat perulangan berhenti. count++; dan
+    count = 3; membuat count tidak pernah mencapai 0, sedangkan break; menghentikan
+    perulangan setelah menampilkan 3 saja.
+  xp: 15
