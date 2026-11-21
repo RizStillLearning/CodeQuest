@@ -18,6 +18,8 @@
     --cq-mint: #a8e6cf;
     --cq-coral: #ffb8a1;
     --cq-ink: #4a3b52;
+    /* Text selection only: no surface uses it, so selected text shows up everywhere. */
+    --cq-cyan: #7fe3f5;
 
     --cq-font-pixel: 'Press Start 2P', monospace;
     --cq-font-mono: 'VT323', monospace;
@@ -87,7 +89,7 @@ a {
 }
 
 ::selection {
-    background: var(--cq-peach);
+    background: var(--cq-cyan);
     color: var(--cq-ink);
 }
 
