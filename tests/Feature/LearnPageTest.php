@@ -4,8 +4,8 @@ namespace Tests\Feature;
 
 use App\Content\ContentException;
 use App\Content\ContentRepository;
+use App\Content\Language;
 use App\Models\User;
-use App\ViewModels\LearningPath;
 use Tests\TestCase;
 
 class LearnPageTest extends TestCase
@@ -22,30 +22,33 @@ class LearnPageTest extends TestCase
         $this->get('/belajar')->assertRedirect(route('login'));
     }
 
-    public function test_learn_page_shows_language_tabs_and_paths_directly(): void
+    public function test_learn_page_shows_a_card_per_language_without_the_paths(): void
     {
         $response = $this->actingAs(User::factory()->make(['name' => 'Siti Aminah']))->get('/belajar');
 
         $response->assertOk()
             ->assertViewIs('learn')
-            ->assertViewHas('paths', fn (array $paths) => array_map(fn (LearningPath $path) => $path->language->key, $paths) === ['python', 'java', 'c'])
+            ->assertViewHas('languages', fn (array $languages) => array_map(fn (Language $language) => $language->key, $languages) === ['python', 'java', 'c'])
             ->assertSee('Halo, Siti!')
             ->assertSee('Pilih bahasamu, ikuti jalurnya')
-            ->assertSeeInOrder(['id="cq-tab-python"', 'id="cq-tab-java"', 'id="cq-tab-c"'], false)
-            ->assertSee('Level 1: Dasar Pemrograman')
-            ->assertSee('Pengenalan Pemrograman')
+            ->assertSeeInOrder(['Mulai belajar Python', 'Mulai belajar Java', 'Mulai belajar C'])
+            ->assertSee('Dasar Pemrograman')
+            ->assertDontSee('cq-path-step', false)
             // Landing-page sections are not repeated here.
             ->assertDontSee('bukan hafalan')
             ->assertDontSee('Lima langkah dari nol')
             ->assertDontSee('Coba sekarang, tanpa daftar');
     }
 
-    public function test_start_button_says_lessons_are_coming_until_lesson_pages_exist(): void
+    public function test_start_buttons_open_each_language_path_page(): void
     {
-        $this->actingAs(User::factory()->make())
-            ->get('/belajar')
-            ->assertSee('Halaman pelajaran sedang kami siapkan.')
-            ->assertDontSee(route('register'));
+        $response = $this->actingAs(User::factory()->make())->get('/belajar');
+
+        foreach (['python', 'java', 'c'] as $language) {
+            $response->assertSee('href="'.url("/belajar/{$language}").'" class="btn btn-primary w-100 mt-auto"', false);
+        }
+
+        $response->assertDontSee(route('register'));
     }
 
     public function test_navbar_marks_learn_as_the_current_page(): void

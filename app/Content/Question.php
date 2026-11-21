@@ -34,6 +34,23 @@ final readonly class Question
         return [$this->answer, ...$this->alsoAccept];
     }
 
+    /**
+     * Server-side check for practice answers. Same rule as content/README.md:
+     * compare after trimming the start and end; line endings don't matter.
+     */
+    public function isCorrect(string $answer): bool
+    {
+        $normalize = fn (string $text) => trim(str_replace("\r\n", "\n", $text));
+
+        foreach ($this->acceptedAnswers() as $accepted) {
+            if ($normalize($accepted) === $normalize($answer)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function expectsMultilineAnswer(): bool
     {
         return str_contains(trim($this->answer), "\n");

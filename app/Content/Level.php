@@ -19,6 +19,33 @@ final readonly class Level
         public array $questions,
     ) {}
 
+    public function lesson(int $order): ?Lesson
+    {
+        foreach ($this->lessons as $lesson) {
+            if ($lesson->order === $order) {
+                return $lesson;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function questionIds(): array
+    {
+        return array_map(fn (Question $question) => $question->id, $this->questions);
+    }
+
+    /**
+     * Correct answers needed to pass the practice: $minScore % of the questions, rounded up.
+     */
+    public function requiredCorrect(): int
+    {
+        return intdiv($this->minScore * count($this->questions) + 99, 100);
+    }
+
     public function questionXp(): int
     {
         return array_sum(array_map(fn (Question $question) => $question->xp, $this->questions));

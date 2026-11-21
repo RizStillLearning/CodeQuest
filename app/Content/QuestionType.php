@@ -26,15 +26,15 @@ enum QuestionType: string
     }
 
     /**
-     * Bootstrap Icons name (without the "bi-" prefix).
+     * pixelarticons name (without the "pixelart-icons-font-" prefix).
      */
     public function icon(): string
     {
         return match ($this) {
-            self::PredictOutput => 'terminal-fill',
-            self::FillIn => 'input-cursor-text',
-            self::MultipleChoice => 'ui-radios',
-            self::CaseStudy => 'briefcase-fill',
+            self::PredictOutput => 'terminal',
+            self::FillIn => 'text-cursor-input',
+            self::MultipleChoice => 'bulletlist',
+            self::CaseStudy => 'briefcase',
         };
     }
 

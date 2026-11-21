@@ -17,6 +17,7 @@
     @endif
 </head>
 <body class="cq-minimal">
+    @include('partials.crt')
     <header class="cq-minimal-header">
         <a href="{{ url('/') }}" aria-label="CodeQuest, ke beranda">@include('partials.logo')</a>
     </header>

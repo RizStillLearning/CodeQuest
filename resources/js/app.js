@@ -7,6 +7,9 @@ initPasswordReveal();
 initSubmitOnce();
 focusFirstInvalidField();
 
+// Answer feedback takes focus so screen readers read it before the "next" button.
+document.querySelector('[data-autofocus]')?.focus();
+
 document.querySelectorAll('[data-try-question]').forEach(initTryQuestion);
 
 // Flash messages render visible (so they work without JS) and hide themselves after a while.

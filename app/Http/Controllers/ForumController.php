@@ -13,7 +13,7 @@ class ForumController extends Controller
     {
         return view('coming-soon', [
             'title' => 'Forum diskusi',
-            'icon' => 'chat-dots-fill',
+            'icon' => 'message',
             'description' => 'Di sini kamu akan bisa bertanya seputar materi dan soal, dan membantu menjawab pertanyaan pelajar lain.',
         ]);
     }

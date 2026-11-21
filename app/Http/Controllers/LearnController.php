@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Content\ContentException;
 use App\Content\ContentRepository;
-use App\ViewModels\LearningPath;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
- * The signed-in home: pick a language and see its learning path.
+ * The signed-in home: pick a language. Each language's path is on PathController's page.
  */
 class LearnController extends Controller
 {
@@ -25,7 +24,7 @@ class LearnController extends Controller
 
         return view('learn', [
             'user' => $request->user(),
-            'paths' => array_map(LearningPath::forLanguage(...), array_values($languages)),
+            'languages' => array_values($languages),
         ]);
     }
 }

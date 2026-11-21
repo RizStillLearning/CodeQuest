@@ -13,7 +13,7 @@ class LeaderboardController extends Controller
     {
         return view('coming-soon', [
             'title' => 'Papan peringkat',
-            'icon' => 'trophy-fill',
+            'icon' => 'trophy',
             'description' => 'Di sini kamu akan bisa melihat posisimu dibanding pelajar lain berdasarkan XP.',
         ]);
     }

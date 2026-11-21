@@ -223,6 +223,27 @@ class ContentRepositoryTest extends TestCase
         $this->repository('python')->languages();
     }
 
+    public function test_lesson_body_is_the_markdown_after_the_front_matter(): void
+    {
+        $this->writeLevel('python', 'level-01-basics', order: 1);
+        $this->write('python/level-01-basics/lessons/01-intro.md', $this->lesson('python-l1-intro', 'Pengenalan', order: 1, xp: 20));
+
+        $lesson = $this->repository('python')->languages()['python']->firstLevel()->lessons[0];
+
+        $this->assertSame('## Coba ini', $lesson->body);
+    }
+
+    public function test_lesson_without_content_is_rejected(): void
+    {
+        $this->writeLevel('python', 'level-01-basics', order: 1);
+        $this->write('python/level-01-basics/lessons/01-intro.md', "---\nid: python-l1-intro\ntitle: Pengenalan\norder: 1\nxp: 20\n---\n\n");
+
+        $this->expectException(ContentException::class);
+        $this->expectExceptionMessage('no content after the front matter');
+
+        $this->repository('python')->languages();
+    }
+
     public function test_level_without_description_is_rejected(): void
     {
         $this->write('python/level-01-basics/level.yaml', "id: python-l1\ntitle: Dasar\norder: 1\nunlock:\n  min_score: 70\n");

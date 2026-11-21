@@ -8,40 +8,36 @@
     {{-- Hero --}}
     <section class="cq-hero" aria-labelledby="cq-hero-title">
         <div class="container">
-            <div class="row align-items-center gy-5 gx-lg-5">
-                <div class="col-lg-6">
-                    <span class="cq-eyebrow">
-                        <i class="bi bi-controller" aria-hidden="true"></i> Belajar coding ala game
-                    </span>
-                    <h1 class="cq-hero-title" id="cq-hero-title">
-                        Belajar coding lewat <span class="cq-highlight">praktik</span>, bukan hafalan.
-                    </h1>
-                    <p class="cq-lead">
-                        Pelajaran singkat, soal interaktif, dan XP di setiap langkah.
-                        Pilih bahasa, selesaikan level demi level, dan lihat progresmu terus naik.
-                    </p>
-                    <div class="d-flex flex-wrap gap-3 mb-4">
-                        <a href="{{ route('register') }}" class="btn btn-primary btn-lg">
-                            Mulai belajar <i class="bi bi-arrow-right" aria-hidden="true"></i>
-                        </a>
-                        <a href="#cara-kerja" class="btn btn-ghost btn-lg">Lihat cara kerjanya</a>
-                    </div>
-                    <ul class="cq-checks">
-                        <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Mulai dari nol</li>
-                        <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Feedback di setiap jawaban</li>
-                        <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Progres tersimpan otomatis</li>
-                    </ul>
-                </div>
-                <div class="col-lg-6">
-                    @if ($demoQuestion)
-                        @include('partials.home.try-question', ['question' => $demoQuestion, 'language' => $demoLanguage])
-                    @endif
-                </div>
+            <div class="cq-hero-art" aria-hidden="true">
+                <i class="pixelart-icons-font-cloud"></i>
+                <i class="pixelart-icons-font-sun"></i>
+                <i class="pixelart-icons-font-cloud"></i>
             </div>
+            <span class="cq-eyebrow">
+                <i class="pixelart-icons-font-gamepad" aria-hidden="true"></i> Belajar coding ala game
+            </span>
+            <h1 class="cq-hero-title" id="cq-hero-title">
+                Belajar coding lewat <span class="cq-highlight">praktik</span>, bukan hafalan.
+            </h1>
+            <p class="cq-lead">
+                Pelajaran singkat, soal interaktif, dan XP di setiap langkah.
+                Pilih bahasa, selesaikan level demi level, dan lihat progresmu terus naik.
+            </p>
+            <div class="cq-hero-actions">
+                <a href="{{ route('register') }}" class="btn btn-primary cq-btn-xl">
+                    Mulai belajar <i class="pixelart-icons-font-arrow-right" aria-hidden="true"></i>
+                </a>
+                <a href="#cara-kerja" class="btn cq-btn-outline cq-btn-xl">Lihat cara kerjanya</a>
+            </div>
+            <ul class="cq-checks">
+                <li><i class="pixelart-icons-font-check" aria-hidden="true"></i> Mulai dari nol</li>
+                <li><i class="pixelart-icons-font-check" aria-hidden="true"></i> Feedback di setiap jawaban</li>
+                <li><i class="pixelart-icons-font-check" aria-hidden="true"></i> Progres tersimpan otomatis</li>
+            </ul>
         </div>
     </section>
 
-    {{-- Why CodeQuest: one card per top learner problem from the survey --}}
+    {{-- Why CodeQuest: one card per top learner problem from the survey, then a real question to try --}}
     <section class="cq-section" id="kenapa" aria-labelledby="cq-why-title">
         <div class="container">
             <div class="cq-section-head">
@@ -55,10 +51,10 @@
                     <div class="col-md-4">
                         <div class="cq-card">
                             <span class="cq-icon-tile is-{{ $reason['tone'] }}" aria-hidden="true">
-                                <i class="bi bi-{{ $reason['icon'] }}"></i>
+                                <i class="pixelart-icons-font-{{ $reason['icon'] }}"></i>
                             </span>
                             <p class="cq-problem">
-                                <i class="bi bi-chat-quote-fill" aria-hidden="true"></i>
+                                <i class="pixelart-icons-font-quote-text-inline" aria-hidden="true"></i>
                                 <span><span class="visually-hidden">Masalah: </span>&ldquo;{{ $reason['problem'] }}&rdquo;</span>
                             </p>
                             <h3>{{ $reason['title'] }}</h3>
@@ -66,6 +62,11 @@
                         </div>
                     </div>
                 @endforeach
+                @if ($demoQuestion)
+                    <div class="col-12">
+                        @include('partials.home.try-question', ['question' => $demoQuestion, 'language' => $demoLanguage])
+                    </div>
+                @endif
             </div>
         </div>
     </section>
@@ -82,7 +83,7 @@
             <ol class="cq-steps">
                 @foreach ($steps as $step)
                     <li class="cq-step">
-                        <span class="cq-step-node" aria-hidden="true"><i class="bi bi-{{ $step['icon'] }}"></i></span>
+                        <span class="cq-step-node" aria-hidden="true"><i class="pixelart-icons-font-{{ $step['icon'] }}"></i></span>
                         <div>
                             <span class="cq-step-number">Langkah {{ $loop->iteration }}</span>
                             <h3>{{ $step['title'] }}</h3>
@@ -120,7 +121,7 @@
                 @foreach ($questionTypes as $questionType)
                     <div class="col">
                         <div class="cq-card cq-type-card">
-                            <span class="cq-icon-tile" aria-hidden="true"><i class="bi bi-{{ $questionType['type']->icon() }}"></i></span>
+                            <span class="cq-icon-tile" aria-hidden="true"><i class="pixelart-icons-font-{{ $questionType['type']->icon() }}"></i></span>
                             <h3>{{ $questionType['type']->label() }}</h3>
                             <p>{{ $questionType['description'] }}</p>
                         </div>
@@ -139,8 +140,8 @@
                     <p>Level 1 dimulai dari nol. Tidak perlu pengalaman coding sebelumnya.</p>
                 </div>
                 <div class="d-flex flex-wrap gap-3">
-                    <a href="{{ route('register') }}" class="btn btn-xp btn-lg">Daftar sekarang</a>
-                    <a href="{{ route('login') }}" class="btn btn-outline-light btn-lg">Masuk</a>
+                    <a href="{{ route('register') }}" class="btn btn-primary btn-lg">Daftar sekarang</a>
+                    <a href="{{ route('login') }}" class="btn btn-ghost btn-lg">Masuk</a>
                 </div>
             </div>
         </div>

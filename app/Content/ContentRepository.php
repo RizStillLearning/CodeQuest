@@ -128,12 +128,18 @@ class ContentRepository
         }
 
         $data = $this->mapping($this->parseYaml($matches[1], $file), $file);
+        $body = trim(substr($contents, strlen($matches[0])));
+
+        if ($body === '') {
+            throw ContentException::invalid($this->relative($file), 'the lesson has no content after the front matter');
+        }
 
         return new Lesson(
             id: $this->text($data, 'id', $file),
             title: $this->text($data, 'title', $file),
             order: $this->integer($data, 'order', $file),
             xp: $this->integer($data, 'xp', $file),
+            body: $body,
         );
     }
 
