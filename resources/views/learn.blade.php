@@ -20,9 +20,10 @@
                         <div class="col-md-6 col-lg-4">
                             <div class="cq-lang-card h-100 d-flex flex-column">
                                 @include('partials.language-summary', ['language' => $language])
-                                @include('partials.level-summary', ['level' => $language->firstLevel()])
-                                <a href="{{ route('paths.show', $language->key) }}" class="btn btn-primary w-100 mt-auto">
-                                    Mulai belajar {{ $language->name }} <i class="pixelart-icons-font-arrow-right" aria-hidden="true"></i>
+                                @include('partials.level-summary', ['level' => $progress[$language->key]->currentLevel()])
+                                <a href="{{ route('paths.show', $language->key) }}" class="btn btn-primary w-100 mt-auto cq-lang-start">
+                                    {{ $progress[$language->key]->hasStarted() ? 'Lanjutkan' : 'Mulai' }} belajar {{ $language->name }}
+                                    <i class="pixelart-icons-font-arrow-right" aria-hidden="true"></i>
                                 </a>
                             </div>
                         </div>

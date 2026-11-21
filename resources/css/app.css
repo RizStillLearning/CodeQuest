@@ -1445,6 +1445,13 @@ small {
 .cq-lang-java { --lang-bg: var(--cq-coral); }
 .cq-lang-c { --lang-bg: var(--cq-lavender); }
 
+/* Language cards sit side by side, so their buttons share one height: room for two
+   lines, which the longest label ("Lanjutkan belajar Python") needs on narrow cards. */
+.cq-lang-start {
+    --bs-btn-font-size: .625rem;
+    min-height: calc(2 * 1.6em + 2 * var(--bs-btn-padding-y) + 2 * var(--bs-btn-border-width));
+}
+
 .cq-lang-card h3 {
     font-size: .875rem;
 }

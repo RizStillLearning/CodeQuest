@@ -51,6 +51,29 @@ class LearnerProgressTest extends TestCase
         $this->assertFalse($passed->isLevelDone($level2));
     }
 
+    public function test_current_level_holds_the_next_step_and_stays_on_the_last_level_at_the_end(): void
+    {
+        $language = $this->language();
+
+        $this->assertSame('python-l1', (new LearnerProgress($language))->currentLevel()->id);
+        $this->assertSame('python-l1', (new LearnerProgress($language, ['python-l1-a', 'python-l1-b']))->currentLevel()->id);
+        $this->assertSame('python-l2', (new LearnerProgress($language, ['python-l1-a', 'python-l1-b'], ['python-l1']))->currentLevel()->id);
+
+        $everything = new LearnerProgress($language, ['python-l1-a', 'python-l1-b', 'python-l2-a', 'python-l2-b'], ['python-l1', 'python-l2']);
+        $this->assertSame('python-l2', $everything->currentLevel()->id);
+    }
+
+    public function test_started_once_any_step_in_the_language_is_done(): void
+    {
+        $language = $this->language();
+
+        $this->assertFalse((new LearnerProgress($language))->hasStarted());
+        // Another language's progress doesn't count.
+        $this->assertFalse((new LearnerProgress($language, ['java-l1-a'], ['java-l1']))->hasStarted());
+        $this->assertTrue((new LearnerProgress($language, ['python-l1-a']))->hasStarted());
+        $this->assertTrue((new LearnerProgress($language, [], ['python-l2']))->hasStarted());
+    }
+
     /**
      * @param  list<string>  $lessons
      * @param  list<string>  $practices

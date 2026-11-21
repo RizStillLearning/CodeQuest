@@ -28,15 +28,17 @@ final class LearnerProgress
     /** The level whose practice is next, when the next step is a practice. */
     private ?string $nextPracticeId = null;
 
+    private Level $currentLevel;
+
     /**
      * @param  list<string>  $completedLessons  lesson ids
      * @param  list<string>  $completedPractices  ids of levels whose practice is passed
      */
-    public function __construct(Language $language, array $completedLessons = [], array $completedPractices = [])
+    public function __construct(private readonly Language $language, array $completedLessons = [], array $completedPractices = [])
     {
         $this->lessonsDone = array_fill_keys($completedLessons, true);
         $this->practicesDone = array_fill_keys($completedPractices, true);
-        $this->findNextStep($language);
+        $this->findNextStep();
     }
 
     public static function of(User $user, Language $language): self
@@ -70,6 +72,35 @@ final class LearnerProgress
         return $this->isPracticeDone($level) || $this->nextPracticeId === $level->id;
     }
 
+    /**
+     * The level the learner is working on: the one holding their next step, or
+     * the last level once they've finished everything.
+     */
+    public function currentLevel(): Level
+    {
+        return $this->currentLevel;
+    }
+
+    /**
+     * Whether the learner has finished any lesson or practice in this language.
+     */
+    public function hasStarted(): bool
+    {
+        foreach ($this->language->levels as $level) {
+            if ($this->isPracticeDone($level)) {
+                return true;
+            }
+
+            foreach ($level->lessons as $lesson) {
+                if ($this->isLessonDone($lesson)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public function isLevelDone(Level $level): bool
     {
         foreach ($level->lessons as $lesson) {
@@ -95,9 +126,12 @@ final class LearnerProgress
         return $level->questions !== [] && $this->isPracticeOpen($level);
     }
 
-    private function findNextStep(Language $language): void
+    private function findNextStep(): void
     {
-        foreach ($language->levels as $level) {
+        foreach ($this->language->levels as $level) {
+            // Left on the last level when every step is done.
+            $this->currentLevel = $level;
+
             foreach ($level->lessons as $lesson) {
                 if (! $this->isLessonDone($lesson)) {
                     $this->nextLessonId = $lesson->id;
