@@ -105,6 +105,13 @@ samp {
     font-variant-ligatures: none;
 }
 
+/* VT323 looks far smaller than Press Start 2P at the same size, so code in a
+   heading is scaled up to stand as tall as the heading's letters. */
+:is(h1, h2, h3, h4, h5, h6) code {
+    font-size: 1.7em;
+    line-height: 1;
+}
+
 .small,
 small {
     font-size: 1.125rem;
