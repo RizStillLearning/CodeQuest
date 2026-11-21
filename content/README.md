@@ -52,8 +52,10 @@ Every question has `id`, `type`, `prompt`, `answer`, `explanation`, and `xp`.
 | `multiple_choice` | `options`, optional `code` | one of the options, written exactly the same |
 | `case_study` | `scenario`, `options`, optional `code` | one of the options, written exactly the same |
 
+- `predict_output` questions whose code reads keyboard input have an `input` field: what
+  the user types, shown to the learner (for example "Jika pengguna mengetik 7, ...").
 - In Java and C questions, `code` shows only the lines inside `main()`, unless the
-  question is about the program's structure.
+  question is about the program's structure. Java code assumes `import java.util.Scanner;`.
 - Answers are compared after trimming whitespace at the start and end.
 - `explanation` is shown after the user answers, whether they were right or wrong.
 
